@@ -1,276 +1,118 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Who spends the most importing games?",
-    "subtitle": [
-      "Each circle is a country, sized by its 2023 imports of board and table games (US$).",
-      "Circles sit near their country and push apart so they don't overlap"
-    ],
-    "anchor": "start",
-    "subtitleFont": "Source Sans 3",
-    "subtitleFontSize": 13,
-    "subtitleColor": "#5f5a52",
-    "offset": 12
+    "text": "Strategy and war games please players most; children's games least",
+    "subtitle": "Spread of average ratings within each category. Box = middle half of games, line = median"
   },
-  "width": 900,
-  "height": 460,
-  "padding": 5,
-  "autosize": "pad",
-  "signals": [
-    {
-      "name": "maxR",
-      "value": 70
-    }
-  ],
-  "projections": [
-    {
-      "name": "projection",
-      "type": "equalEarth",
-      "fit": {
-        "signal": "{type: 'Sphere'}"
-      },
-      "size": [
-        {
-          "signal": "width"
-        },
-        {
-          "signal": "height"
-        }
-      ]
-    }
-  ],
-  "data": [
-    {
-      "name": "world",
-      "url": "js/ne_110m_admin_0_countries.topojson",
-      "format": {
-        "type": "topojson",
-        "feature": "ne_110m_admin_0_countries"
-      }
-    },
-    {
-      "name": "imports",
-      "url": "data/game_imports_2023.csv",
-      "format": {
-        "type": "csv",
-        "parse": {
-          "import_musd": "number",
-          "lon": "number",
-          "lat": "number"
-        }
-      },
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "datum.import_musd >= 5"
-        },
-        {
-          "type": "formula",
-          "as": "xy",
-          "expr": "scale('projection', [datum.lon, datum.lat])"
-        },
-        {
-          "type": "formula",
-          "as": "cx",
-          "expr": "datum.xy[0]"
-        },
-        {
-          "type": "formula",
-          "as": "cy",
-          "expr": "datum.xy[1]"
-        },
-        {
-          "type": "formula",
-          "as": "r",
-          "expr": "scale('size', datum.import_musd)"
-        },
-        {
-          "type": "force",
-          "static": true,
-          "iterations": 300,
-          "forces": [
-            {
-              "force": "collide",
-              "radius": {
-                "expr": "datum.r + 1"
-              }
-            },
-            {
-              "force": "x",
-              "x": "cx",
-              "strength": 0.2
-            },
-            {
-              "force": "y",
-              "y": "cy",
-              "strength": 0.2
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "scales": [
-    {
-      "name": "size",
-      "type": "sqrt",
-      "domain": [
-        0,
-        12200
-      ],
-      "range": [
-        0,
-        {
-          "signal": "maxR"
-        }
-      ],
-      "zero": true
-    },
-    {
-      "name": "color",
-      "type": "ordinal",
-      "domain": [
-        "North America",
-        "Europe",
-        "Asia",
-        "South America",
-        "Oceania",
-        "Africa"
-      ],
-      "range": [
-        "#4c78a8",
-        "#f58518",
-        "#e45756",
-        "#72b7b2",
-        "#54a24b",
-        "#eeca3b"
-      ]
-    }
-  ],
-  "legends": [
-    {
-      "fill": "color",
-      "title": "Continent",
-      "orient": "left",
-      "direction": "vertical",
-      "labelFont": "Source Sans 3",
-      "titleFont": "Source Sans 3"
-    }
-  ],
-  "marks": [
-    {
-      "type": "shape",
-      "from": {
-        "data": "world"
-      },
-      "encode": {
-        "enter": {
-          "fill": {
-            "value": "#efe9de"
-          },
-          "stroke": {
-            "value": "#ffffff"
-          },
-          "strokeWidth": {
-            "value": 0.5
-          }
-        }
-      },
-      "transform": [
-        {
-          "type": "geoshape",
-          "projection": "projection"
-        }
-      ]
-    },
-    {
-      "type": "symbol",
-      "name": "bubbles",
-      "from": {
-        "data": "imports"
-      },
-      "encode": {
-        "enter": {
-          "shape": {
-            "value": "circle"
-          },
-          "fill": {
-            "scale": "color",
-            "field": "continent"
-          },
-          "stroke": {
-            "value": "#ffffff"
-          },
-          "strokeWidth": {
-            "value": 1
-          },
-          "tooltip": {
-            "signal": "{'Country': datum.country, 'Imports 2023 (US$ million)': format(datum.import_musd, ',.1f')}"
-          }
-        },
-        "update": {
-          "x": {
-            "field": "x"
-          },
-          "y": {
-            "field": "y"
-          },
-          "size": {
-            "signal": "4 * datum.r * datum.r"
-          },
-          "fillOpacity": {
-            "value": 0.85
-          }
-        },
-        "hover": {
-          "fillOpacity": {
-            "value": 1
-          }
-        }
-      }
-    },
-    {
-      "type": "text",
-      "from": {
-        "data": "imports"
-      },
-      "interactive": false,
-      "encode": {
-        "update": {
-          "x": {
-            "field": "x"
-          },
-          "y": {
-            "field": "y"
-          },
-          "text": {
-            "signal": "datum.r > 16 ? datum.iso_a3 : ''"
-          },
-          "align": {
-            "value": "center"
-          },
-          "baseline": {
-            "value": "middle"
-          },
-          "fill": {
-            "value": "#ffffff"
-          },
-          "font": {
-            "value": "Fredoka"
-          },
-          "fontSize": {
-            "signal": "max(10, datum.r / 2.6)"
-          }
-        }
+  "data": {
+    "url": "data/games_by_domain.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "avg_rating_2025": "number",
+        "complexity_2021": "number",
+        "voters_2025": "number"
       }
     }
-  ],
+  },
+  "width": "container",
+  "height": 320,
+  "mark": {
+    "type": "boxplot",
+    "extent": 1.5,
+    "size": 22,
+    "median": {
+      "color": "#fff"
+    },
+    "outliers": {
+      "size": 6,
+      "opacity": 0.3
+    }
+  },
+  "encoding": {
+    "y": {
+      "field": "domain",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Strategy Games",
+        "Wargames",
+        "Thematic Games",
+        "Customizable Games",
+        "Family Games",
+        "Party Games",
+        "Abstract Games",
+        "Children's Games"
+      ]
+    },
+    "x": {
+      "field": "avg_rating_2025",
+      "type": "quantitative",
+      "title": "Average rating (out of 10)",
+      "scale": {
+        "domain": [
+          3,
+          10
+        ]
+      }
+    },
+    "color": {
+      "field": "domain",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Abstract Games",
+          "Children's Games",
+          "Customizable Games",
+          "Family Games",
+          "Party Games",
+          "Strategy Games",
+          "Thematic Games",
+          "Wargames"
+        ],
+        "range": [
+          "#4C78A8",
+          "#F58518",
+          "#E45756",
+          "#72B7B2",
+          "#54A24B",
+          "#C9A227",
+          "#B279A2",
+          "#9D755D"
+        ]
+      },
+      "legend": null
+    }
+  },
   "config": {
+    "font": "Source Sans 3",
     "title": {
       "font": "Fredoka",
       "fontSize": 17,
       "fontWeight": 600,
-      "color": "#2b2b2b"
+      "anchor": "start",
+      "color": "#2b2b2b",
+      "subtitleFont": "Source Sans 3",
+      "subtitleFontSize": 13,
+      "subtitleFontWeight": "normal",
+      "subtitleColor": "#5f5a52",
+      "offset": 12
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#555",
+      "labelColor": "#555",
+      "gridColor": "#eee",
+      "domainColor": "#bbb"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
     }
   }
 }

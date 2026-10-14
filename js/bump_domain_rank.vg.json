@@ -1,73 +1,131 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Nine in ten members live in North America or Europe",
-    "subtitle": "Each square = 1% of BoardGameGeek members with a listed country"
+    "text": "Which category is released most often?",
+    "subtitle": "Rank of each category by number of ranked games released, every two years 2000 to 2020 (1 = most games)"
   },
   "data": {
-    "url": "data/waffle_continent.csv"
+    "url": "data/games_per_year_domain.csv"
   },
-  "width": 250,
-  "height": 250,
-  "mark": {
-    "type": "square",
-    "size": 360,
-    "cornerRadius": 3
-  },
+  "width": "container",
+  "height": 300,
+  "transform": [
+    {
+      "filter": "datum.year >= 2000 && datum.year <= 2020"
+    },
+    {
+      "calculate": "floor(datum.year/2)*2",
+      "as": "period"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "sum",
+          "field": "games",
+          "as": "games"
+        }
+      ],
+      "groupby": [
+        "period",
+        "domain"
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "rank"
+        }
+      ],
+      "groupby": [
+        "period"
+      ],
+      "sort": [
+        {
+          "field": "games",
+          "order": "descending"
+        }
+      ]
+    }
+  ],
   "encoding": {
     "x": {
-      "field": "col",
+      "field": "period",
       "type": "ordinal",
-      "axis": null
+      "title": null,
+      "axis": {
+        "labelAngle": 0
+      }
     },
     "y": {
-      "field": "row",
+      "field": "rank",
       "type": "ordinal",
-      "axis": null
+      "title": "Rank"
     },
     "color": {
-      "field": "continent",
+      "field": "domain",
       "type": "nominal",
-      "title": "Continent",
+      "title": "Category",
       "scale": {
         "domain": [
-          "North America",
-          "Europe",
-          "Asia",
-          "South America",
-          "Oceania",
-          "Africa"
+          "Abstract Games",
+          "Children's Games",
+          "Customizable Games",
+          "Family Games",
+          "Party Games",
+          "Strategy Games",
+          "Thematic Games",
+          "Wargames"
         ],
         "range": [
-          "#4c78a8",
-          "#f58518",
-          "#e45756",
-          "#72b7b2",
-          "#54a24b",
-          "#eeca3b"
+          "#4C78A8",
+          "#F58518",
+          "#E45756",
+          "#72B7B2",
+          "#54A24B",
+          "#C9A227",
+          "#B279A2",
+          "#9D755D"
         ]
-      },
-      "legend": {
-        "orient": "bottom",
-        "columns": 3
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone"
       }
     },
-    "tooltip": [
-      {
-        "field": "continent",
-        "title": "Continent"
+    {
+      "mark": {
+        "type": "circle",
+        "size": 120,
+        "opacity": 1
       },
-      {
-        "field": "share",
-        "title": "Share (%)"
-      },
-      {
-        "field": "users",
-        "title": "Members",
-        "format": ","
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "domain",
+            "title": "Category"
+          },
+          {
+            "field": "period",
+            "title": "Years from"
+          },
+          {
+            "field": "games",
+            "title": "Games"
+          },
+          {
+            "field": "rank",
+            "title": "Rank"
+          }
+        ]
       }
-    ]
-  },
+    }
+  ],
   "config": {
     "font": "Source Sans 3",
     "title": {

@@ -1,90 +1,119 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Strategy and war games please players most; children's games least",
-    "subtitle": "Spread of average ratings within each category. Box = middle half of games, line = median"
-  },
-  "data": {
-    "url": "data/games_by_domain.csv",
-    "format": {
-      "type": "csv",
-      "parse": {
-        "year": "number",
-        "avg_rating_2025": "number",
-        "complexity_2021": "number",
-        "voters_2025": "number"
-      }
-    }
+    "text": "Board gamers per 100,000 people",
+    "subtitle": "BoardGameGeek members divided by population. Grey = no members listed"
   },
   "width": "container",
-  "height": 320,
-  "mark": {
-    "type": "boxplot",
-    "extent": 1.5,
-    "size": 22,
-    "median": {
-      "color": "#fff"
-    },
-    "outliers": {
-      "size": 6,
-      "opacity": 0.3
-    }
+  "height": 420,
+  "projection": {
+    "type": "equalEarth"
   },
-  "encoding": {
-    "y": {
-      "field": "domain",
-      "type": "nominal",
-      "title": null,
-      "sort": [
-        "Strategy Games",
-        "Wargames",
-        "Thematic Games",
-        "Customizable Games",
-        "Family Games",
-        "Party Games",
-        "Abstract Games",
-        "Children's Games"
-      ]
-    },
-    "x": {
-      "field": "avg_rating_2025",
-      "type": "quantitative",
-      "title": "Average rating (out of 10)",
-      "scale": {
-        "domain": [
-          3,
-          10
-        ]
+  "layer": [
+    {
+      "data": {
+        "sphere": true
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#f7f4ee",
+        "stroke": "#d8d0c0"
       }
     },
-    "color": {
-      "field": "domain",
-      "type": "nominal",
-      "scale": {
-        "domain": [
-          "Abstract Games",
-          "Children's Games",
-          "Customizable Games",
-          "Family Games",
-          "Party Games",
-          "Strategy Games",
-          "Thematic Games",
-          "Wargames"
-        ],
-        "range": [
-          "#4C78A8",
-          "#F58518",
-          "#E45756",
-          "#72B7B2",
-          "#54A24B",
-          "#C9A227",
-          "#B279A2",
-          "#9D755D"
-        ]
+    {
+      "data": {
+        "graticule": {
+          "step": [
+            30,
+            30
+          ]
+        }
       },
-      "legend": null
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#e3dccd",
+        "strokeWidth": 0.5,
+        "fill": null
+      }
+    },
+    {
+      "data": {
+        "url": "js/ne_110m_admin_0_countries.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.properties.CONTINENT != 'Antarctica'"
+        },
+        {
+          "lookup": "properties.NAME",
+          "from": {
+            "data": {
+              "url": "data/bgg_users_by_country.csv"
+            },
+            "key": "country",
+            "fields": [
+              "per100k",
+              "bgg_users"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#fff",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.per100k == null",
+            "value": "#d9d9d9"
+          },
+          "field": "per100k",
+          "type": "quantitative",
+          "title": "Members per 100k",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              1,
+              5,
+              10,
+              25,
+              50
+            ],
+            "range": [
+              "#fdecd2",
+              "#fcc98a",
+              "#f9a04b",
+              "#e36d22",
+              "#b8410d",
+              "#7a2804"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "properties.NAME",
+            "title": "Country"
+          },
+          {
+            "field": "per100k",
+            "title": "Members per 100,000",
+            "format": ".1f"
+          },
+          {
+            "field": "bgg_users",
+            "title": "Members",
+            "format": ","
+          }
+        ]
+      }
     }
-  },
+  ],
   "config": {
     "font": "Source Sans 3",
     "title": {

@@ -1,216 +1,183 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
   "title": {
-    "text": "Where BoardGameGeek members live",
-    "subtitle": "Circle size = number of members who list that country (Feb 2025)"
+    "text": "Wargames and strategy games make up the biggest families",
+    "subtitle": "Area = number of ranked games in each category (a game can be in two)",
+    "anchor": "start",
+    "subtitleFont": "Source Sans 3",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#5f5a52",
+    "offset": 12
   },
-  "width": "container",
-  "height": 420,
-  "projection": {
-    "type": "equalEarth"
-  },
-  "layer": [
+  "width": 960,
+  "height": 360,
+  "padding": 5,
+  "data": [
     {
-      "data": {
-        "sphere": true
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#f7f4ee",
-        "stroke": "#d8d0c0"
-      }
-    },
-    {
-      "data": {
-        "graticule": {
-          "step": [
-            30,
-            30
-          ]
+      "name": "tree",
+      "url": "data/treemap_domains.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "games": "number",
+          "avg_rating": "number",
+          "avg_complexity": "number"
         }
-      },
-      "mark": {
-        "type": "geoshape",
-        "stroke": "#e3dccd",
-        "strokeWidth": 0.5,
-        "fill": null
-      }
-    },
-    {
-      "data": {
-        "url": "js/ne_110m_admin_0_countries.topojson",
-        "format": {
-          "type": "topojson",
-          "feature": "ne_110m_admin_0_countries"
-        }
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#ece6da",
-        "stroke": "#ffffff",
-        "strokeWidth": 0.5
-      }
-    },
-    {
-      "data": {
-        "url": "data/bgg_users_by_country.csv"
       },
       "transform": [
         {
-          "filter": "datum.continent != 'Antarctica'"
-        }
-      ],
-      "params": [
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parent"
+        },
         {
-          "name": "continent_pick",
-          "select": {
-            "type": "point",
-            "fields": [
-              "continent"
-            ]
+          "type": "treemap",
+          "field": "games",
+          "sort": {
+            "field": "value",
+            "order": "descending"
           },
-          "bind": "legend"
+          "round": true,
+          "method": "squarify",
+          "size": [
+            {
+              "signal": "width"
+            },
+            {
+              "signal": "height"
+            }
+          ],
+          "paddingInner": 3
         }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "!datum.children"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "Abstract Games",
+        "Children's Games",
+        "Customizable Games",
+        "Family Games",
+        "Party Games",
+        "Strategy Games",
+        "Thematic Games",
+        "Wargames"
       ],
-      "mark": {
-        "type": "circle",
-        "stroke": "#fff",
-        "strokeWidth": 0.6
+      "range": [
+        "#4C78A8",
+        "#F58518",
+        "#E45756",
+        "#72B7B2",
+        "#54A24B",
+        "#C9A227",
+        "#B279A2",
+        "#9D755D"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": {
+        "data": "leaves"
       },
-      "encoding": {
-        "longitude": {
-          "field": "lon",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "lat",
-          "type": "quantitative"
-        },
-        "size": {
-          "field": "bgg_users",
-          "type": "quantitative",
-          "title": "Members",
-          "scale": {
-            "range": [
-              8,
-              2500
-            ]
+      "encode": {
+        "enter": {
+          "fill": {
+            "scale": "color",
+            "field": "id"
           },
-          "legend": {
-            "values": [
-              1000,
-              10000,
-              50000,
-              150000
-            ]
+          "stroke": {
+            "value": "#fff"
+          },
+          "tooltip": {
+            "signal": "{'Category': datum.id, 'Games': format(datum.games, ','), 'Average rating': datum.avg_rating, 'Average complexity': datum.avg_complexity}"
           }
         },
-        "color": {
-          "field": "continent",
-          "type": "nominal",
-          "title": "Continent (click)",
-          "scale": {
-            "domain": [
-              "North America",
-              "Europe",
-              "Asia",
-              "South America",
-              "Oceania",
-              "Africa"
-            ],
-            "range": [
-              "#4c78a8",
-              "#f58518",
-              "#e45756",
-              "#72b7b2",
-              "#54a24b",
-              "#eeca3b"
-            ]
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fillOpacity": {
+            "value": 0.9
           }
         },
-        "opacity": {
-          "condition": {
-            "param": "continent_pick",
-            "value": 0.85
-          },
-          "value": 0.12
-        },
-        "tooltip": [
-          {
-            "field": "country",
-            "title": "Country"
-          },
-          {
-            "field": "bgg_users",
-            "title": "Members",
-            "format": ","
-          },
-          {
-            "field": "per100k",
-            "title": "Per 100,000 people"
+        "hover": {
+          "fillOpacity": {
+            "value": 1
           }
-        ]
+        }
       }
     },
     {
-      "data": {
-        "url": "data/bgg_users_by_country.csv"
+      "type": "text",
+      "from": {
+        "data": "leaves"
       },
-      "transform": [
-        {
-          "filter": "datum.bgg_users > 20000 || datum.country == 'Malaysia'"
-        }
-      ],
-      "mark": {
-        "type": "text",
-        "dy": -14,
-        "fontSize": 11,
-        "fontWeight": "bold",
-        "color": "#333"
-      },
-      "encoding": {
-        "longitude": {
-          "field": "lon",
-          "type": "quantitative"
+      "interactive": false,
+      "encode": {
+        "enter": {
+          "font": {
+            "value": "Fredoka"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fill": {
+            "value": "#fff"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "text": {
+            "signal": "[replace(datum.id,' Games',''), format(datum.games, ',') + ' games']"
+          }
         },
-        "latitude": {
-          "field": "lat",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "country"
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 8"
+          },
+          "y": {
+            "signal": "datum.y0 + 8"
+          }
         }
       }
     }
   ],
   "config": {
-    "font": "Source Sans 3",
     "title": {
       "font": "Fredoka",
       "fontSize": 17,
       "fontWeight": 600,
-      "anchor": "start",
-      "color": "#2b2b2b",
-      "subtitleFont": "Source Sans 3",
-      "subtitleFontSize": 13,
-      "subtitleFontWeight": "normal",
-      "subtitleColor": "#5f5a52",
-      "offset": 12
+      "color": "#2b2b2b"
     },
-    "axis": {
-      "labelFontSize": 12,
-      "titleFontSize": 12,
-      "titleColor": "#555",
-      "labelColor": "#555",
-      "gridColor": "#eee",
-      "domainColor": "#bbb"
-    },
-    "legend": {
-      "labelFontSize": 12,
-      "titleFontSize": 12
-    },
-    "view": {
-      "stroke": null
+    "text": {
+      "font": "Source Sans 3"
     }
   }
 }

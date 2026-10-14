@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "What do the top 25 games have in common?",
-    "subtitle": "Each line is one of BoardGameGeek's 25 highest-ranked games. Axes are scaled from lowest to highest among these games"
+    "text": "Most games are easy to learn",
+    "subtitle": "Number of games at each complexity level (1 = light, 5 = heavy)"
   },
   "data": {
     "url": "data/games.csv",
@@ -21,276 +21,54 @@
     }
   },
   "width": "container",
-  "height": 320,
+  "height": 240,
   "transform": [
     {
-      "filter": "isValid(datum.rank_2025) && datum.rank_2025 <= 25"
-    },
-    {
-      "calculate": "datum.avg_rating_2025",
-      "as": "Rating"
-    },
-    {
-      "calculate": "datum.complexity_2021",
-      "as": "Complexity"
-    },
-    {
-      "calculate": "datum.play_time",
-      "as": "Play time (min)"
-    },
-    {
-      "calculate": "datum.min_age",
-      "as": "Minimum age"
-    },
-    {
-      "calculate": "datum.owned_2021",
-      "as": "Owners"
-    },
-    {
-      "window": [
-        {
-          "op": "count",
-          "as": "index"
-        }
-      ]
-    },
-    {
-      "fold": [
-        "Rating",
-        "Complexity",
-        "Play time (min)",
-        "Minimum age",
-        "Owners"
-      ]
-    },
-    {
-      "joinaggregate": [
-        {
-          "op": "min",
-          "field": "value",
-          "as": "min"
-        },
-        {
-          "op": "max",
-          "field": "value",
-          "as": "max"
-        }
-      ],
-      "groupby": [
-        "key"
-      ]
-    },
-    {
-      "calculate": "(datum.value - datum.min) / (datum.max - datum.min)",
-      "as": "norm"
+      "filter": "isValid(datum.complexity_2021)"
     }
   ],
-  "layer": [
-    {
-      "mark": {
-        "type": "rule",
-        "color": "#ccc"
-      },
-      "encoding": {
-        "detail": {
-          "aggregate": "count"
-        },
-        "x": {
-          "field": "key",
-          "type": "nominal",
-          "sort": [
-            "Rating",
-            "Complexity",
-            "Play time (min)",
-            "Minimum age",
-            "Owners"
-          ]
-        }
-      }
-    },
-    {
-      "params": [
-        {
-          "name": "hl",
-          "select": {
-            "type": "point",
-            "fields": [
-              "title"
-            ],
-            "on": "pointerover",
-            "clear": "pointerout"
-          }
-        }
-      ],
-      "mark": {
-        "type": "line",
-        "strokeWidth": 2.5
-      },
-      "encoding": {
-        "color": {
-          "field": "domain",
-          "type": "nominal",
-          "scale": {
-            "domain": [
-              "Abstract Games",
-              "Children's Games",
-              "Customizable Games",
-              "Family Games",
-              "Party Games",
-              "Strategy Games",
-              "Thematic Games",
-              "Wargames"
-            ],
-            "range": [
-              "#4C78A8",
-              "#F58518",
-              "#E45756",
-              "#72B7B2",
-              "#54A24B",
-              "#C9A227",
-              "#B279A2",
-              "#9D755D"
-            ]
-          },
-          "title": "Category"
-        },
-        "detail": {
-          "field": "index",
-          "type": "nominal"
-        },
-        "opacity": {
-          "condition": {
-            "param": "hl",
-            "empty": false,
-            "value": 1
-          },
-          "value": 0.35
-        },
-        "x": {
-          "field": "key",
-          "type": "nominal",
-          "sort": [
-            "Rating",
-            "Complexity",
-            "Play time (min)",
-            "Minimum age",
-            "Owners"
-          ]
-        },
-        "y": {
-          "field": "norm",
-          "type": "quantitative",
-          "axis": null
-        },
-        "tooltip": [
-          {
-            "field": "title",
-            "title": "Game"
-          },
-          {
-            "field": "rank_2025",
-            "title": "Rank"
-          },
-          {
-            "field": "Rating"
-          },
-          {
-            "field": "Complexity"
-          },
-          {
-            "field": "Play time (min)"
-          },
-          {
-            "field": "Minimum age"
-          },
-          {
-            "field": "Owners",
-            "format": ","
-          }
+  "mark": {
+    "type": "bar",
+    "color": "#4C78A8",
+    "cornerRadiusTopLeft": 2,
+    "cornerRadiusTopRight": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "complexity_2021",
+      "bin": {
+        "step": 0.25,
+        "extent": [
+          1,
+          5
         ]
+      },
+      "type": "quantitative",
+      "title": "Complexity (weight)"
+    },
+    "y": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Games"
+    },
+    "tooltip": [
+      {
+        "field": "complexity_2021",
+        "bin": {
+          "step": 0.25,
+          "extent": [
+            1,
+            5
+          ]
+        },
+        "title": "Complexity"
+      },
+      {
+        "aggregate": "count",
+        "title": "Games"
       }
-    },
-    {
-      "encoding": {
-        "x": {
-          "field": "key",
-          "type": "nominal",
-          "sort": [
-            "Rating",
-            "Complexity",
-            "Play time (min)",
-            "Minimum age",
-            "Owners"
-          ]
-        },
-        "y": {
-          "value": 0
-        }
-      },
-      "layer": [
-        {
-          "mark": {
-            "type": "text",
-            "style": "label"
-          },
-          "encoding": {
-            "text": {
-              "aggregate": "max",
-              "field": "max"
-            }
-          }
-        },
-        {
-          "mark": {
-            "type": "tick",
-            "style": "tick",
-            "size": 8,
-            "color": "#ccc"
-          }
-        }
-      ]
-    },
-    {
-      "encoding": {
-        "x": {
-          "field": "key",
-          "type": "nominal",
-          "sort": [
-            "Rating",
-            "Complexity",
-            "Play time (min)",
-            "Minimum age",
-            "Owners"
-          ]
-        },
-        "y": {
-          "value": 320
-        }
-      },
-      "layer": [
-        {
-          "mark": {
-            "type": "text",
-            "style": "label"
-          },
-          "encoding": {
-            "text": {
-              "aggregate": "min",
-              "field": "min"
-            }
-          }
-        },
-        {
-          "mark": {
-            "type": "tick",
-            "style": "tick",
-            "size": 8,
-            "color": "#ccc"
-          }
-        }
-      ]
-    }
-  ],
+    ]
+  },
   "config": {
     "font": "Source Sans 3",
     "title": {
@@ -319,24 +97,6 @@
     },
     "view": {
       "stroke": null
-    },
-    "axisX": {
-      "domain": false,
-      "labelAngle": 0,
-      "tickColor": "#ccc",
-      "title": null,
-      "labelFont": "Fredoka",
-      "labelFontSize": 13
-    },
-    "style": {
-      "label": {
-        "baseline": "middle",
-        "align": "right",
-        "dx": -5
-      },
-      "tick": {
-        "orient": "horizontal"
-      }
     }
   }
 }

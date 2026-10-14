@@ -1,11 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Heavier games tend to score higher",
-    "subtitle": [
-      "Games for each mix of complexity and rating.",
-      "Pick a category in the menu below"
-    ]
+    "text": "The most-owned games",
+    "subtitle": "Each die = 10,000 BoardGameGeek members who own the game (2021)"
   },
   "data": {
     "url": "data/games.csv",
@@ -24,99 +21,84 @@
     }
   },
   "width": "container",
-  "height": 300,
-  "params": [
-    {
-      "name": "cat",
-      "value": "All",
-      "bind": {
-        "input": "select",
-        "options": [
-          "All",
-          "Abstract Games",
-          "Children's Games",
-          "Customizable Games",
-          "Family Games",
-          "Party Games",
-          "Strategy Games",
-          "Thematic Games",
-          "Wargames"
-        ],
-        "name": "Category: "
-      }
-    }
-  ],
+  "height": 330,
   "transform": [
     {
-      "filter": "isValid(datum.complexity_2021) && isValid(datum.avg_rating_2025)"
+      "filter": "isValid(datum.owned_2021)"
     },
     {
-      "filter": "cat == 'All' || datum.domain == cat"
+      "window": [
+        {
+          "op": "row_number",
+          "as": "r"
+        }
+      ],
+      "sort": [
+        {
+          "field": "owned_2021",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.r <= 10"
+    },
+    {
+      "calculate": "round(datum.owned_2021/10000)",
+      "as": "icons"
+    },
+    {
+      "calculate": "sequence(1, datum.icons + 1)",
+      "as": "seq"
+    },
+    {
+      "flatten": [
+        "seq"
+      ]
     }
   ],
   "mark": {
-    "type": "rect"
+    "type": "text",
+    "fontSize": 24,
+    "baseline": "middle"
   },
   "encoding": {
     "x": {
-      "field": "complexity_2021",
-      "bin": {
-        "step": 0.25,
-        "extent": [
-          1,
-          5
-        ]
-      },
-      "type": "quantitative",
-      "title": "Complexity (weight)"
+      "field": "seq",
+      "type": "ordinal",
+      "axis": null
     },
     "y": {
-      "field": "avg_rating_2025",
-      "bin": {
-        "step": 0.25,
-        "extent": [
-          4,
-          9.5
-        ]
+      "field": "title",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "owned_2021",
+        "order": "descending"
       },
-      "type": "quantitative",
-      "title": "Average rating (out of 10)"
-    },
-    "color": {
-      "aggregate": "count",
-      "type": "quantitative",
-      "title": "Games",
-      "scale": {
-        "scheme": "oranges",
-        "type": "sqrt"
+      "axis": {
+        "labelFontSize": 13,
+        "labelFont": "Fredoka",
+        "domain": false,
+        "ticks": false
       }
+    },
+    "text": {
+      "value": "🎲"
     },
     "tooltip": [
       {
-        "field": "complexity_2021",
-        "bin": {
-          "step": 0.25,
-          "extent": [
-            1,
-            5
-          ]
-        },
-        "title": "Complexity"
+        "field": "title",
+        "title": "Game"
       },
       {
-        "field": "avg_rating_2025",
-        "bin": {
-          "step": 0.25,
-          "extent": [
-            4,
-            9.5
-          ]
-        },
-        "title": "Rating"
+        "field": "owned_2021",
+        "title": "Owners",
+        "format": ","
       },
       {
-        "aggregate": "count",
-        "title": "Games"
+        "field": "year",
+        "title": "Released"
       }
     ]
   },

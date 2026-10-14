@@ -1,128 +1,185 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Which category is released most often?",
-    "subtitle": "Rank of each category by number of ranked games released, every two years 2000 to 2020 (1 = most games)"
-  },
-  "data": {
-    "url": "data/games_per_year_domain.csv"
+    "text": "Where BoardGameGeek members live",
+    "subtitle": "Circle size = number of members who list that country (Feb 2025)"
   },
   "width": "container",
-  "height": 300,
-  "transform": [
-    {
-      "filter": "datum.year >= 2000 && datum.year <= 2020"
-    },
-    {
-      "calculate": "floor(datum.year/2)*2",
-      "as": "period"
-    },
-    {
-      "aggregate": [
-        {
-          "op": "sum",
-          "field": "games",
-          "as": "games"
-        }
-      ],
-      "groupby": [
-        "period",
-        "domain"
-      ]
-    },
-    {
-      "window": [
-        {
-          "op": "rank",
-          "as": "rank"
-        }
-      ],
-      "groupby": [
-        "period"
-      ],
-      "sort": [
-        {
-          "field": "games",
-          "order": "descending"
-        }
-      ]
-    }
-  ],
-  "encoding": {
-    "x": {
-      "field": "period",
-      "type": "ordinal",
-      "title": null,
-      "axis": {
-        "labelAngle": 0
-      }
-    },
-    "y": {
-      "field": "rank",
-      "type": "ordinal",
-      "title": "Rank"
-    },
-    "color": {
-      "field": "domain",
-      "type": "nominal",
-      "title": "Category",
-      "scale": {
-        "domain": [
-          "Abstract Games",
-          "Children's Games",
-          "Customizable Games",
-          "Family Games",
-          "Party Games",
-          "Strategy Games",
-          "Thematic Games",
-          "Wargames"
-        ],
-        "range": [
-          "#4C78A8",
-          "#F58518",
-          "#E45756",
-          "#72B7B2",
-          "#54A24B",
-          "#C9A227",
-          "#B279A2",
-          "#9D755D"
-        ]
-      }
-    }
+  "height": 420,
+  "projection": {
+    "type": "equalEarth"
   },
   "layer": [
     {
+      "data": {
+        "sphere": true
+      },
       "mark": {
-        "type": "line",
-        "strokeWidth": 3,
-        "interpolate": "monotone"
+        "type": "geoshape",
+        "fill": "#f7f4ee",
+        "stroke": "#d8d0c0"
       }
     },
     {
+      "data": {
+        "graticule": {
+          "step": [
+            30,
+            30
+          ]
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#e3dccd",
+        "strokeWidth": 0.5,
+        "fill": null
+      }
+    },
+    {
+      "data": {
+        "url": "js/ne_110m_admin_0_countries.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#ece6da",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "url": "data/bgg_users_by_country.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.continent != 'Antarctica'"
+        }
+      ],
+      "params": [
+        {
+          "name": "continent_pick",
+          "select": {
+            "type": "point",
+            "fields": [
+              "continent"
+            ]
+          },
+          "bind": "legend"
+        }
+      ],
       "mark": {
         "type": "circle",
-        "size": 120,
-        "opacity": 1
+        "stroke": "#fff",
+        "strokeWidth": 0.6
       },
       "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "bgg_users",
+          "type": "quantitative",
+          "title": "Members",
+          "scale": {
+            "range": [
+              8,
+              2500
+            ]
+          },
+          "legend": {
+            "values": [
+              1000,
+              10000,
+              50000,
+              150000
+            ]
+          }
+        },
+        "color": {
+          "field": "continent",
+          "type": "nominal",
+          "title": "Continent (click)",
+          "scale": {
+            "domain": [
+              "North America",
+              "Europe",
+              "Asia",
+              "South America",
+              "Oceania",
+              "Africa"
+            ],
+            "range": [
+              "#4c78a8",
+              "#f58518",
+              "#e45756",
+              "#72b7b2",
+              "#54a24b",
+              "#eeca3b"
+            ]
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "continent_pick",
+            "value": 0.85
+          },
+          "value": 0.12
+        },
         "tooltip": [
           {
-            "field": "domain",
-            "title": "Category"
+            "field": "country",
+            "title": "Country"
           },
           {
-            "field": "period",
-            "title": "Years from"
+            "field": "bgg_users",
+            "title": "Members",
+            "format": ","
           },
           {
-            "field": "games",
-            "title": "Games"
-          },
-          {
-            "field": "rank",
-            "title": "Rank"
+            "field": "per100k",
+            "title": "Per 100,000 people"
           }
         ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/bgg_users_by_country.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.bgg_users > 20000 || datum.country == 'Malaysia'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "dy": -14,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#333"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "country"
+        }
       }
     }
   ],

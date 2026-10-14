@@ -1,71 +1,94 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Most games are easy to learn",
-    "subtitle": "Number of games at each complexity level (1 = light, 5 = heavy)"
+    "text": "The board game boom after 2010",
+    "subtitle": "Ranked games released each year by category, 1980 to 2020. Click a category in the legend to highlight it"
   },
   "data": {
-    "url": "data/games.csv",
-    "format": {
-      "type": "csv",
-      "parse": {
-        "year": "number",
-        "rank_2025": "number",
-        "avg_rating_2025": "number",
-        "voters_2025": "number",
-        "complexity_2021": "number",
-        "play_time": "number",
-        "min_age": "number",
-        "owned_2021": "number"
-      }
-    }
+    "url": "data/games_per_year_domain.csv"
   },
   "width": "container",
-  "height": 240,
-  "transform": [
+  "height": 300,
+  "params": [
     {
-      "filter": "isValid(datum.complexity_2021)"
+      "name": "dom",
+      "select": {
+        "type": "point",
+        "fields": [
+          "domain"
+        ]
+      },
+      "bind": "legend"
     }
   ],
   "mark": {
-    "type": "bar",
-    "color": "#4C78A8",
-    "cornerRadiusTopLeft": 2,
-    "cornerRadiusTopRight": 2
+    "type": "area",
+    "interpolate": "monotone"
   },
   "encoding": {
     "x": {
-      "field": "complexity_2021",
-      "bin": {
-        "step": 0.25,
-        "extent": [
-          1,
-          5
-        ]
-      },
+      "field": "year",
       "type": "quantitative",
-      "title": "Complexity (weight)"
+      "title": null,
+      "axis": {
+        "format": "d",
+        "tickCount": 9,
+        "grid": false
+      }
     },
     "y": {
-      "aggregate": "count",
+      "aggregate": "sum",
+      "field": "games",
       "type": "quantitative",
-      "title": "Games"
+      "stack": "center",
+      "axis": null
+    },
+    "color": {
+      "field": "domain",
+      "type": "nominal",
+      "title": "Category",
+      "scale": {
+        "domain": [
+          "Abstract Games",
+          "Children's Games",
+          "Customizable Games",
+          "Family Games",
+          "Party Games",
+          "Strategy Games",
+          "Thematic Games",
+          "Wargames"
+        ],
+        "range": [
+          "#4C78A8",
+          "#F58518",
+          "#E45756",
+          "#72B7B2",
+          "#54A24B",
+          "#C9A227",
+          "#B279A2",
+          "#9D755D"
+        ]
+      }
+    },
+    "opacity": {
+      "condition": {
+        "param": "dom",
+        "value": 1
+      },
+      "value": 0.15
     },
     "tooltip": [
       {
-        "field": "complexity_2021",
-        "bin": {
-          "step": 0.25,
-          "extent": [
-            1,
-            5
-          ]
-        },
-        "title": "Complexity"
+        "field": "domain",
+        "title": "Category"
       },
       {
-        "aggregate": "count",
-        "title": "Games"
+        "field": "year",
+        "title": "Year"
+      },
+      {
+        "field": "games",
+        "title": "Games released"
       }
     ]
   },
