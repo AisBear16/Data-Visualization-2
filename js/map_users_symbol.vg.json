@@ -1,0 +1,159 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Which category is released most often?",
+    "subtitle": "Rank of each category by number of ranked games released, every two years 2000 to 2020 (1 = most games)"
+  },
+  "data": {
+    "url": "data/games_per_year_domain.csv"
+  },
+  "width": "container",
+  "height": 300,
+  "transform": [
+    {
+      "filter": "datum.year >= 2000 && datum.year <= 2020"
+    },
+    {
+      "calculate": "floor(datum.year/2)*2",
+      "as": "period"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "sum",
+          "field": "games",
+          "as": "games"
+        }
+      ],
+      "groupby": [
+        "period",
+        "domain"
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "rank"
+        }
+      ],
+      "groupby": [
+        "period"
+      ],
+      "sort": [
+        {
+          "field": "games",
+          "order": "descending"
+        }
+      ]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "period",
+      "type": "ordinal",
+      "title": null,
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "rank",
+      "type": "ordinal",
+      "title": "Rank"
+    },
+    "color": {
+      "field": "domain",
+      "type": "nominal",
+      "title": "Category",
+      "scale": {
+        "domain": [
+          "Abstract Games",
+          "Children's Games",
+          "Customizable Games",
+          "Family Games",
+          "Party Games",
+          "Strategy Games",
+          "Thematic Games",
+          "Wargames"
+        ],
+        "range": [
+          "#4C78A8",
+          "#F58518",
+          "#E45756",
+          "#72B7B2",
+          "#54A24B",
+          "#C9A227",
+          "#B279A2",
+          "#9D755D"
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone"
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 120,
+        "opacity": 1
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "domain",
+            "title": "Category"
+          },
+          {
+            "field": "period",
+            "title": "Years from"
+          },
+          {
+            "field": "games",
+            "title": "Games"
+          },
+          {
+            "field": "rank",
+            "title": "Rank"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "font": "Source Sans 3",
+    "title": {
+      "font": "Fredoka",
+      "fontSize": 17,
+      "fontWeight": 600,
+      "anchor": "start",
+      "color": "#2b2b2b",
+      "subtitleFont": "Source Sans 3",
+      "subtitleFontSize": 13,
+      "subtitleFontWeight": "normal",
+      "subtitleColor": "#5f5a52",
+      "offset": 12
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#555",
+      "labelColor": "#555",
+      "gridColor": "#eee",
+      "domainColor": "#bbb"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}

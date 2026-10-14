@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Most games are easy to learn",
+    "subtitle": "Number of games at each complexity level (1 = light, 5 = heavy)"
+  },
+  "data": {
+    "url": "data/games.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "rank_2025": "number",
+        "avg_rating_2025": "number",
+        "voters_2025": "number",
+        "complexity_2021": "number",
+        "play_time": "number",
+        "min_age": "number",
+        "owned_2021": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": 240,
+  "transform": [
+    {
+      "filter": "isValid(datum.complexity_2021)"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "color": "#4C78A8",
+    "cornerRadiusTopLeft": 2,
+    "cornerRadiusTopRight": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "complexity_2021",
+      "bin": {
+        "step": 0.25,
+        "extent": [
+          1,
+          5
+        ]
+      },
+      "type": "quantitative",
+      "title": "Complexity (weight)"
+    },
+    "y": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Games"
+    },
+    "tooltip": [
+      {
+        "field": "complexity_2021",
+        "bin": {
+          "step": 0.25,
+          "extent": [
+            1,
+            5
+          ]
+        },
+        "title": "Complexity"
+      },
+      {
+        "aggregate": "count",
+        "title": "Games"
+      }
+    ]
+  },
+  "config": {
+    "font": "Source Sans 3",
+    "title": {
+      "font": "Fredoka",
+      "fontSize": 17,
+      "fontWeight": 600,
+      "anchor": "start",
+      "color": "#2b2b2b",
+      "subtitleFont": "Source Sans 3",
+      "subtitleFontSize": 13,
+      "subtitleFontWeight": "normal",
+      "subtitleColor": "#5f5a52",
+      "offset": 12
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#555",
+      "labelColor": "#555",
+      "gridColor": "#eee",
+      "domainColor": "#bbb"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}

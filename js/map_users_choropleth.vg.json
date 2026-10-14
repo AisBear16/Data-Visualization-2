@@ -1,0 +1,118 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Strategy and war games please players most; children's games least",
+    "subtitle": "Spread of average ratings within each category. Box = middle half of games, line = median"
+  },
+  "data": {
+    "url": "data/games_by_domain.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "avg_rating_2025": "number",
+        "complexity_2021": "number",
+        "voters_2025": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": 320,
+  "mark": {
+    "type": "boxplot",
+    "extent": 1.5,
+    "size": 22,
+    "median": {
+      "color": "#fff"
+    },
+    "outliers": {
+      "size": 6,
+      "opacity": 0.3
+    }
+  },
+  "encoding": {
+    "y": {
+      "field": "domain",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Strategy Games",
+        "Wargames",
+        "Thematic Games",
+        "Customizable Games",
+        "Family Games",
+        "Party Games",
+        "Abstract Games",
+        "Children's Games"
+      ]
+    },
+    "x": {
+      "field": "avg_rating_2025",
+      "type": "quantitative",
+      "title": "Average rating (out of 10)",
+      "scale": {
+        "domain": [
+          3,
+          10
+        ]
+      }
+    },
+    "color": {
+      "field": "domain",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Abstract Games",
+          "Children's Games",
+          "Customizable Games",
+          "Family Games",
+          "Party Games",
+          "Strategy Games",
+          "Thematic Games",
+          "Wargames"
+        ],
+        "range": [
+          "#4C78A8",
+          "#F58518",
+          "#E45756",
+          "#72B7B2",
+          "#54A24B",
+          "#C9A227",
+          "#B279A2",
+          "#9D755D"
+        ]
+      },
+      "legend": null
+    }
+  },
+  "config": {
+    "font": "Source Sans 3",
+    "title": {
+      "font": "Fredoka",
+      "fontSize": 17,
+      "fontWeight": 600,
+      "anchor": "start",
+      "color": "#2b2b2b",
+      "subtitleFont": "Source Sans 3",
+      "subtitleFontSize": 13,
+      "subtitleFontWeight": "normal",
+      "subtitleColor": "#5f5a52",
+      "offset": 12
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#555",
+      "labelColor": "#555",
+      "gridColor": "#eee",
+      "domainColor": "#bbb"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}

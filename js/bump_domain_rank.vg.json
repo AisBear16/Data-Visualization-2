@@ -1,0 +1,101 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Nine in ten members live in North America or Europe",
+    "subtitle": "Each square = 1% of BoardGameGeek members with a listed country"
+  },
+  "data": {
+    "url": "data/waffle_continent.csv"
+  },
+  "width": 250,
+  "height": 250,
+  "mark": {
+    "type": "square",
+    "size": 360,
+    "cornerRadius": 3
+  },
+  "encoding": {
+    "x": {
+      "field": "col",
+      "type": "ordinal",
+      "axis": null
+    },
+    "y": {
+      "field": "row",
+      "type": "ordinal",
+      "axis": null
+    },
+    "color": {
+      "field": "continent",
+      "type": "nominal",
+      "title": "Continent",
+      "scale": {
+        "domain": [
+          "North America",
+          "Europe",
+          "Asia",
+          "South America",
+          "Oceania",
+          "Africa"
+        ],
+        "range": [
+          "#4c78a8",
+          "#f58518",
+          "#e45756",
+          "#72b7b2",
+          "#54a24b",
+          "#eeca3b"
+        ]
+      },
+      "legend": {
+        "orient": "bottom",
+        "columns": 3
+      }
+    },
+    "tooltip": [
+      {
+        "field": "continent",
+        "title": "Continent"
+      },
+      {
+        "field": "share",
+        "title": "Share (%)"
+      },
+      {
+        "field": "users",
+        "title": "Members",
+        "format": ","
+      }
+    ]
+  },
+  "config": {
+    "font": "Source Sans 3",
+    "title": {
+      "font": "Fredoka",
+      "fontSize": 17,
+      "fontWeight": 600,
+      "anchor": "start",
+      "color": "#2b2b2b",
+      "subtitleFont": "Source Sans 3",
+      "subtitleFontSize": 13,
+      "subtitleFontWeight": "normal",
+      "subtitleColor": "#5f5a52",
+      "offset": 12
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#555",
+      "labelColor": "#555",
+      "gridColor": "#eee",
+      "domainColor": "#bbb"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}

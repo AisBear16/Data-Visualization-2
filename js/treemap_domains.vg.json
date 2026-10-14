@@ -1,0 +1,216 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Where BoardGameGeek members live",
+    "subtitle": "Circle size = number of members who list that country (Feb 2025)"
+  },
+  "width": "container",
+  "height": 420,
+  "projection": {
+    "type": "equalEarth"
+  },
+  "layer": [
+    {
+      "data": {
+        "sphere": true
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#f7f4ee",
+        "stroke": "#d8d0c0"
+      }
+    },
+    {
+      "data": {
+        "graticule": {
+          "step": [
+            30,
+            30
+          ]
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#e3dccd",
+        "strokeWidth": 0.5,
+        "fill": null
+      }
+    },
+    {
+      "data": {
+        "url": "js/ne_110m_admin_0_countries.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#ece6da",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "url": "data/bgg_users_by_country.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.continent != 'Antarctica'"
+        }
+      ],
+      "params": [
+        {
+          "name": "continent_pick",
+          "select": {
+            "type": "point",
+            "fields": [
+              "continent"
+            ]
+          },
+          "bind": "legend"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "stroke": "#fff",
+        "strokeWidth": 0.6
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "bgg_users",
+          "type": "quantitative",
+          "title": "Members",
+          "scale": {
+            "range": [
+              8,
+              2500
+            ]
+          },
+          "legend": {
+            "values": [
+              1000,
+              10000,
+              50000,
+              150000
+            ]
+          }
+        },
+        "color": {
+          "field": "continent",
+          "type": "nominal",
+          "title": "Continent (click)",
+          "scale": {
+            "domain": [
+              "North America",
+              "Europe",
+              "Asia",
+              "South America",
+              "Oceania",
+              "Africa"
+            ],
+            "range": [
+              "#4c78a8",
+              "#f58518",
+              "#e45756",
+              "#72b7b2",
+              "#54a24b",
+              "#eeca3b"
+            ]
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "continent_pick",
+            "value": 0.85
+          },
+          "value": 0.12
+        },
+        "tooltip": [
+          {
+            "field": "country",
+            "title": "Country"
+          },
+          {
+            "field": "bgg_users",
+            "title": "Members",
+            "format": ","
+          },
+          {
+            "field": "per100k",
+            "title": "Per 100,000 people"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/bgg_users_by_country.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.bgg_users > 20000 || datum.country == 'Malaysia'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "dy": -14,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#333"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "country"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Source Sans 3",
+    "title": {
+      "font": "Fredoka",
+      "fontSize": 17,
+      "fontWeight": 600,
+      "anchor": "start",
+      "color": "#2b2b2b",
+      "subtitleFont": "Source Sans 3",
+      "subtitleFontSize": 13,
+      "subtitleFontWeight": "normal",
+      "subtitleColor": "#5f5a52",
+      "offset": 12
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#555",
+      "labelColor": "#555",
+      "gridColor": "#eee",
+      "domainColor": "#bbb"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}

@@ -1,0 +1,316 @@
+year,domain,games
+1980,Abstract Games,10
+1980,Children's Games,2
+1980,Family Games,4
+1980,Party Games,1
+1980,Strategy Games,7
+1980,Thematic Games,10
+1980,Wargames,69
+1981,Abstract Games,11
+1981,Children's Games,8
+1981,Family Games,5
+1981,Party Games,2
+1981,Strategy Games,7
+1981,Thematic Games,13
+1981,Wargames,76
+1982,Abstract Games,10
+1982,Children's Games,7
+1982,Family Games,9
+1982,Party Games,1
+1982,Strategy Games,7
+1982,Thematic Games,14
+1982,Wargames,50
+1983,Abstract Games,12
+1983,Children's Games,7
+1983,Family Games,5
+1983,Party Games,2
+1983,Strategy Games,1
+1983,Thematic Games,7
+1983,Wargames,57
+1984,Abstract Games,4
+1984,Children's Games,7
+1984,Family Games,5
+1984,Party Games,2
+1984,Strategy Games,5
+1984,Thematic Games,3
+1984,Wargames,41
+1985,Abstract Games,10
+1985,Children's Games,4
+1985,Family Games,8
+1985,Party Games,1
+1985,Strategy Games,4
+1985,Thematic Games,9
+1985,Wargames,51
+1986,Abstract Games,11
+1986,Children's Games,11
+1986,Family Games,7
+1986,Party Games,3
+1986,Strategy Games,7
+1986,Thematic Games,9
+1986,Wargames,53
+1987,Abstract Games,12
+1987,Children's Games,8
+1987,Family Games,10
+1987,Party Games,1
+1987,Strategy Games,5
+1987,Thematic Games,10
+1987,Wargames,41
+1988,Abstract Games,11
+1988,Children's Games,19
+1988,Family Games,10
+1988,Party Games,4
+1988,Strategy Games,4
+1988,Thematic Games,8
+1988,Wargames,34
+1989,Abstract Games,7
+1989,Children's Games,10
+1989,Family Games,6
+1989,Party Games,8
+1989,Strategy Games,7
+1989,Thematic Games,8
+1989,Wargames,36
+1990,Abstract Games,5
+1990,Children's Games,13
+1990,Family Games,12
+1990,Party Games,8
+1990,Strategy Games,8
+1990,Thematic Games,6
+1990,Wargames,51
+1991,Abstract Games,7
+1991,Children's Games,21
+1991,Family Games,9
+1991,Party Games,4
+1991,Strategy Games,11
+1991,Thematic Games,13
+1991,Wargames,58
+1992,Abstract Games,13
+1992,Children's Games,11
+1992,Family Games,14
+1992,Party Games,5
+1992,Strategy Games,14
+1992,Thematic Games,9
+1992,Wargames,82
+1993,Abstract Games,13
+1993,Children's Games,14
+1993,Customizable Games,2
+1993,Family Games,14
+1993,Party Games,5
+1993,Strategy Games,13
+1993,Thematic Games,12
+1993,Wargames,62
+1994,Abstract Games,11
+1994,Children's Games,14
+1994,Customizable Games,14
+1994,Family Games,12
+1994,Party Games,5
+1994,Strategy Games,18
+1994,Thematic Games,7
+1994,Wargames,58
+1995,Abstract Games,12
+1995,Children's Games,17
+1995,Customizable Games,25
+1995,Family Games,21
+1995,Party Games,4
+1995,Strategy Games,17
+1995,Thematic Games,6
+1995,Wargames,71
+1996,Abstract Games,13
+1996,Children's Games,20
+1996,Customizable Games,14
+1996,Family Games,24
+1996,Party Games,9
+1996,Strategy Games,13
+1996,Thematic Games,10
+1996,Wargames,46
+1997,Abstract Games,19
+1997,Children's Games,13
+1997,Customizable Games,7
+1997,Family Games,25
+1997,Party Games,10
+1997,Strategy Games,13
+1997,Thematic Games,8
+1997,Wargames,62
+1998,Abstract Games,17
+1998,Children's Games,9
+1998,Customizable Games,9
+1998,Family Games,33
+1998,Party Games,7
+1998,Strategy Games,23
+1998,Thematic Games,12
+1998,Wargames,48
+1999,Abstract Games,27
+1999,Children's Games,23
+1999,Customizable Games,9
+1999,Family Games,33
+1999,Party Games,6
+1999,Strategy Games,30
+1999,Thematic Games,8
+1999,Wargames,52
+2000,Abstract Games,21
+2000,Children's Games,32
+2000,Customizable Games,14
+2000,Family Games,29
+2000,Party Games,4
+2000,Strategy Games,30
+2000,Thematic Games,15
+2000,Wargames,39
+2001,Abstract Games,26
+2001,Children's Games,28
+2001,Customizable Games,12
+2001,Family Games,44
+2001,Party Games,11
+2001,Strategy Games,31
+2001,Thematic Games,12
+2001,Wargames,52
+2002,Abstract Games,33
+2002,Children's Games,28
+2002,Customizable Games,8
+2002,Family Games,46
+2002,Party Games,16
+2002,Strategy Games,43
+2002,Thematic Games,16
+2002,Wargames,53
+2003,Abstract Games,38
+2003,Children's Games,30
+2003,Customizable Games,14
+2003,Family Games,53
+2003,Party Games,15
+2003,Strategy Games,46
+2003,Thematic Games,28
+2003,Wargames,64
+2004,Abstract Games,37
+2004,Children's Games,36
+2004,Customizable Games,14
+2004,Family Games,57
+2004,Party Games,22
+2004,Strategy Games,67
+2004,Thematic Games,35
+2004,Wargames,84
+2005,Abstract Games,39
+2005,Children's Games,32
+2005,Customizable Games,19
+2005,Family Games,69
+2005,Party Games,18
+2005,Strategy Games,63
+2005,Thematic Games,35
+2005,Wargames,84
+2006,Abstract Games,46
+2006,Children's Games,27
+2006,Customizable Games,13
+2006,Family Games,68
+2006,Party Games,17
+2006,Strategy Games,67
+2006,Thematic Games,21
+2006,Wargames,80
+2007,Abstract Games,46
+2007,Children's Games,30
+2007,Customizable Games,9
+2007,Family Games,74
+2007,Party Games,24
+2007,Strategy Games,65
+2007,Thematic Games,37
+2007,Wargames,83
+2008,Abstract Games,43
+2008,Children's Games,35
+2008,Customizable Games,8
+2008,Family Games,96
+2008,Party Games,21
+2008,Strategy Games,78
+2008,Thematic Games,39
+2008,Wargames,111
+2009,Abstract Games,39
+2009,Children's Games,60
+2009,Customizable Games,9
+2009,Family Games,99
+2009,Party Games,31
+2009,Strategy Games,95
+2009,Thematic Games,37
+2009,Wargames,104
+2010,Abstract Games,31
+2010,Children's Games,36
+2010,Customizable Games,5
+2010,Family Games,105
+2010,Party Games,24
+2010,Strategy Games,103
+2010,Thematic Games,50
+2010,Wargames,123
+2011,Abstract Games,25
+2011,Children's Games,18
+2011,Customizable Games,9
+2011,Family Games,106
+2011,Party Games,32
+2011,Strategy Games,113
+2011,Thematic Games,69
+2011,Wargames,93
+2012,Abstract Games,28
+2012,Children's Games,8
+2012,Customizable Games,13
+2012,Family Games,116
+2012,Party Games,35
+2012,Strategy Games,128
+2012,Thematic Games,59
+2012,Wargames,112
+2013,Abstract Games,19
+2013,Children's Games,13
+2013,Customizable Games,11
+2013,Family Games,105
+2013,Party Games,39
+2013,Strategy Games,128
+2013,Thematic Games,62
+2013,Wargames,84
+2014,Abstract Games,21
+2014,Children's Games,14
+2014,Customizable Games,14
+2014,Family Games,123
+2014,Party Games,29
+2014,Strategy Games,130
+2014,Thematic Games,73
+2014,Wargames,87
+2015,Abstract Games,17
+2015,Children's Games,9
+2015,Customizable Games,13
+2015,Family Games,125
+2015,Party Games,26
+2015,Strategy Games,168
+2015,Thematic Games,77
+2015,Wargames,94
+2016,Abstract Games,18
+2016,Children's Games,9
+2016,Customizable Games,7
+2016,Family Games,101
+2016,Party Games,37
+2016,Strategy Games,132
+2016,Thematic Games,53
+2016,Wargames,83
+2017,Abstract Games,23
+2017,Children's Games,8
+2017,Customizable Games,3
+2017,Family Games,101
+2017,Party Games,30
+2017,Strategy Games,123
+2017,Thematic Games,75
+2017,Wargames,76
+2018,Abstract Games,12
+2018,Children's Games,9
+2018,Customizable Games,4
+2018,Family Games,91
+2018,Party Games,28
+2018,Strategy Games,119
+2018,Thematic Games,60
+2018,Wargames,76
+2019,Abstract Games,15
+2019,Children's Games,5
+2019,Customizable Games,5
+2019,Family Games,91
+2019,Party Games,15
+2019,Strategy Games,109
+2019,Thematic Games,55
+2019,Wargames,67
+2020,Abstract Games,6
+2020,Children's Games,1
+2020,Customizable Games,2
+2020,Family Games,31
+2020,Party Games,7
+2020,Strategy Games,64
+2020,Thematic Games,23
+2020,Wargames,45

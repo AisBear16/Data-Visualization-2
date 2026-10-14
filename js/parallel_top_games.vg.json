@@ -1,0 +1,135 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The most-owned games",
+    "subtitle": "Each die = 10,000 BoardGameGeek members who own the game (2021)"
+  },
+  "data": {
+    "url": "data/games.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "rank_2025": "number",
+        "avg_rating_2025": "number",
+        "voters_2025": "number",
+        "complexity_2021": "number",
+        "play_time": "number",
+        "min_age": "number",
+        "owned_2021": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": 330,
+  "transform": [
+    {
+      "filter": "isValid(datum.owned_2021)"
+    },
+    {
+      "window": [
+        {
+          "op": "row_number",
+          "as": "r"
+        }
+      ],
+      "sort": [
+        {
+          "field": "owned_2021",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.r <= 10"
+    },
+    {
+      "calculate": "round(datum.owned_2021/10000)",
+      "as": "icons"
+    },
+    {
+      "calculate": "sequence(1, datum.icons + 1)",
+      "as": "seq"
+    },
+    {
+      "flatten": [
+        "seq"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "fontSize": 24,
+    "baseline": "middle"
+  },
+  "encoding": {
+    "x": {
+      "field": "seq",
+      "type": "ordinal",
+      "axis": null
+    },
+    "y": {
+      "field": "title",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "owned_2021",
+        "order": "descending"
+      },
+      "axis": {
+        "labelFontSize": 13,
+        "labelFont": "Fredoka",
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "text": {
+      "value": "🎲"
+    },
+    "tooltip": [
+      {
+        "field": "title",
+        "title": "Game"
+      },
+      {
+        "field": "owned_2021",
+        "title": "Owners",
+        "format": ","
+      },
+      {
+        "field": "year",
+        "title": "Released"
+      }
+    ]
+  },
+  "config": {
+    "font": "Source Sans 3",
+    "title": {
+      "font": "Fredoka",
+      "fontSize": 17,
+      "fontWeight": 600,
+      "anchor": "start",
+      "color": "#2b2b2b",
+      "subtitleFont": "Source Sans 3",
+      "subtitleFontSize": 13,
+      "subtitleFontWeight": "normal",
+      "subtitleColor": "#5f5a52",
+      "offset": 12
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#555",
+      "labelColor": "#555",
+      "gridColor": "#eee",
+      "domainColor": "#bbb"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}

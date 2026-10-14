@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roll the Dice: The World of Board Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="dice">🎲 ♟️ 🧩</div>
+  <h1>Roll the Dice: <span>The World of Board Games</span></h1>
+  <p>From CATAN to Monopoly, board games bring friends and families around the same table. But who plays them around the world, which kinds are most popular, and are the hardest games really the best?</p>
+</header>
+
+<main>
+
+  <section id="where">
+    <p class="section-label">Part 1</p>
+    <h2>Where the world's board gamers are</h2>
+    <p class="lede">BoardGameGeek is the world's largest board game website, where players rate games and log their collections. More than 400,000 of its members say which country they live in, which gives us a map of the hobby.</p>
+
+    <div class="card"><div id="map_users_symbol" class="chart"></div>
+      <p class="note">The United States alone has about 155,000 members. Malaysia has 765, most of them in Selangor and Kuala Lumpur.</p></div>
+
+    <div class="card"><div id="map_users_choropleth" class="chart"></div>
+      <p class="note">Big countries have more members simply because they have more people, so this map shows members per 100,000 people. Canada (77) and the Nordic countries lead. Malaysia has about 2.4 per 100,000, so the hobby is still small here, with plenty of room to grow.</p></div>
+
+    <div class="side card">
+      <div id="waffle_continent"></div>
+      <div>
+        <p class="big-number">89%</p>
+        <p>of members with a listed country live in North America or Europe. Asia, home to about 59% of the world's people, has just 4%.</p>
+      </div>
+    </div>
+
+    <div class="card"><div id="cartogram_imports"></div>
+      <p class="note">Trade data tells a similar story. The United States imported over US$12 billion of board and table games in 2023, about four times more than Germany. Malaysia imported US$41 million. (Trade code HS 950490 also includes casino and arcade table games, not only board games.)</p></div>
+  </section>
+
+  <section id="kinds">
+    <p class="section-label">Part 2</p>
+    <h2>What kinds of games are out there?</h2>
+    <p class="lede">BoardGameGeek sorts games into eight broad categories, such as family games, party games and strategy games. "Wargames" recreate battles, and "thematic" games tell a story.</p>
+    <div class="card"><div id="treemap_domains" class="chart"></div></div>
+    <div class="card"><div id="stream_year_domain" class="chart"></div>
+      <p class="note">Releases of ranked games more than doubled from 2000 to 2010 and peaked at 529 in 2015. Data on categories stops at 2020.</p></div>
+    <div class="card"><div id="bump_domain_rank" class="chart"></div></div>
+  </section>
+
+  <section id="complexity">
+    <p class="section-label">Part 3</p>
+    <h2>Is harder better?</h2>
+    <p class="lede">Each game has a <strong>complexity score</strong>, also called its "weight". Players vote from 1 (simple rules) to 5 (many rules and long-term planning). The score is the average of those votes.</p>
+    <div class="grid-2">
+      <div class="card"><div id="hist_complexity" class="chart"></div>
+        <p class="note">71% of games score under 2.5, so most games are light to medium.</p></div>
+      <div class="card"><div id="heatmap_complexity_rating" class="chart"></div></div>
+    </div>
+    <p class="callout">Games with a complexity of 4 or more average 7.5 out of 10, while games under 2 average 6.0. Players who rate games on BoardGameGeek seem to reward depth.</p>
+    <div class="card"><div id="box_rating_domain" class="chart"></div></div>
+    <div class="card"><div id="scatter_small_multiples"></div></div>
+  </section>
+
+  <section id="hits">
+    <p class="section-label">Part 4</p>
+    <h2>What makes a hit?</h2>
+    <p class="lede">The best-rated games and the most-owned games are not the same. The top-ranked games are long and complex, while the games in the most homes are quick and easy to learn.</p>
+    <div class="card"><div id="parallel_top_games" class="chart"></div>
+      <p class="note">The typical top-25 game takes 2 hours, suits ages 13 and up and has a complexity of about 3.6.</p></div>
+    <div class="card"><div id="isotype_owners" class="chart"></div>
+      <p class="note">Pandemic, CATAN and Carcassonne are each owned by about 150,000 members, and all three have a complexity of 2.4 or less, far lighter than the top-ranked games.</p></div>
+  </section>
+
+</main>
+
+<footer>
+  <h2>About this visualisation</h2>
+  <p>Draft for FIT3179 Data Visualisation 2, Monash University Malaysia. Author: [your name]. Date: 14 October 2026.</p>
+  <h3>Data sources</h3>
+  <ul>
+    <li>bwandowando, <a href="https://www.kaggle.com/datasets/bwandowando/boardgamegeek-board-games-reviews-jan-2025">BoardGameGeek Games + Reviews as of Feb 2025</a>, Kaggle. Game ratings, rankings and member countries.</li>
+    <li>D. Samarasinghe, <a href="https://ieee-dataport.org/open-access/boardgamegeek-dataset-board-games">BoardGameGeek Dataset on Board Games</a>, IEEE DataPort, 2021. Complexity, categories, play time, age and owners.</li>
+    <li>World Bank, <a href="https://wits.worldbank.org/">World Integrated Trade Solution (WITS)</a>, UN Comtrade data, HS 950490 imports, 2023.</li>
+    <li>Natural Earth, 1:110m Admin 0 countries (country shapes and population estimates), as provided in FIT3179 Week 8 studio.</li>
+  </ul>
+  <p>Built with Vega-Lite and Vega. AI tools (Claude) were used to help prepare the data, write the chart specifications and draft text.</p>
+</footer>
+
+<script>
+  const charts = [
+    "map_users_symbol", "map_users_choropleth", "waffle_continent", "cartogram_imports",
+    "treemap_domains", "stream_year_domain", "bump_domain_rank",
+    "hist_complexity", "heatmap_complexity_rating", "box_rating_domain", "scatter_small_multiples",
+    "parallel_top_games", "isotype_owners"
+  ];
+  charts.forEach(function (id) {
+    vegaEmbed("#" + id, "js/" + id + ".vg.json", {actions: false}).catch(console.error);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+id,parent,games,avg_rating,avg_complexity
+All games,,,,
+Abstract Games,All games,949,6.22,1.95
+Children's Games,All games,786,5.58,1.18
+Customizable Games,All games,286,6.39,2.41
+Family Games,All games,2086,6.39,1.66
+Party Games,All games,580,6.28,1.35
+Strategy Games,All games,2186,6.9,2.71
+Thematic Games,All games,1161,6.75,2.45
+Wargames,All games,3213,6.85,2.88

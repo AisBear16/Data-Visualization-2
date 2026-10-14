@@ -1,0 +1,153 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Heavier games tend to score higher",
+    "subtitle": [
+      "Games for each mix of complexity and rating.",
+      "Pick a category in the menu below"
+    ]
+  },
+  "data": {
+    "url": "data/games.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "rank_2025": "number",
+        "avg_rating_2025": "number",
+        "voters_2025": "number",
+        "complexity_2021": "number",
+        "play_time": "number",
+        "min_age": "number",
+        "owned_2021": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": 300,
+  "params": [
+    {
+      "name": "cat",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All",
+          "Abstract Games",
+          "Children's Games",
+          "Customizable Games",
+          "Family Games",
+          "Party Games",
+          "Strategy Games",
+          "Thematic Games",
+          "Wargames"
+        ],
+        "name": "Category: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "isValid(datum.complexity_2021) && isValid(datum.avg_rating_2025)"
+    },
+    {
+      "filter": "cat == 'All' || datum.domain == cat"
+    }
+  ],
+  "mark": {
+    "type": "rect"
+  },
+  "encoding": {
+    "x": {
+      "field": "complexity_2021",
+      "bin": {
+        "step": 0.25,
+        "extent": [
+          1,
+          5
+        ]
+      },
+      "type": "quantitative",
+      "title": "Complexity (weight)"
+    },
+    "y": {
+      "field": "avg_rating_2025",
+      "bin": {
+        "step": 0.25,
+        "extent": [
+          4,
+          9.5
+        ]
+      },
+      "type": "quantitative",
+      "title": "Average rating (out of 10)"
+    },
+    "color": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Games",
+      "scale": {
+        "scheme": "oranges",
+        "type": "sqrt"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "complexity_2021",
+        "bin": {
+          "step": 0.25,
+          "extent": [
+            1,
+            5
+          ]
+        },
+        "title": "Complexity"
+      },
+      {
+        "field": "avg_rating_2025",
+        "bin": {
+          "step": 0.25,
+          "extent": [
+            4,
+            9.5
+          ]
+        },
+        "title": "Rating"
+      },
+      {
+        "aggregate": "count",
+        "title": "Games"
+      }
+    ]
+  },
+  "config": {
+    "font": "Source Sans 3",
+    "title": {
+      "font": "Fredoka",
+      "fontSize": 17,
+      "fontWeight": 600,
+      "anchor": "start",
+      "color": "#2b2b2b",
+      "subtitleFont": "Source Sans 3",
+      "subtitleFontSize": 13,
+      "subtitleFontWeight": "normal",
+      "subtitleColor": "#5f5a52",
+      "offset": 12
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#555",
+      "labelColor": "#555",
+      "gridColor": "#eee",
+      "domainColor": "#bbb"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}

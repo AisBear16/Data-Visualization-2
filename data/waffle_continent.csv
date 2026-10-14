@@ -1,0 +1,65 @@
+:root {
+  --ink: #2b2b2b;
+  --muted: #5f5a52;
+  --paper: #fbf8f2;
+  --card: #ffffff;
+  --line: #e7e0d2;
+  --accent: #c2410c;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+}
+h1, h2, h3 { font-family: "Fredoka", sans-serif; font-weight: 600; line-height: 1.2; }
+.hero {
+  background: #2b2b2b;
+  color: #fff;
+  padding: 72px 24px 56px;
+  text-align: center;
+}
+.hero h1 { font-size: 52px; margin: 0 0 12px; }
+.hero h1 span { color: #fdba74; }
+.hero p { max-width: 680px; margin: 0 auto; color: #e8e2d6; font-size: 20px; }
+.dice { font-size: 40px; letter-spacing: 12px; margin-bottom: 8px; }
+main { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+section { padding: 56px 0 24px; border-bottom: 1px solid var(--line); }
+.section-label {
+  font-family: "Fredoka", sans-serif;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 14px;
+  margin: 0;
+}
+section > h2 { font-size: 34px; margin: 4px 0 12px; }
+.lede { max-width: 760px; color: var(--muted); margin: 0 0 28px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 20px 12px;
+  margin-bottom: 24px;
+}
+.card p.note { font-size: 15px; color: var(--muted); margin: 8px 0 4px; max-width: 760px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-2 .card { margin-bottom: 0; }
+.grid-2 + .card, .card + .grid-2 { margin-top: 24px; }
+.chart { width: 100%; }
+.side { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; }
+.big-number { font-family: "Fredoka", sans-serif; font-size: 44px; color: var(--accent); margin: 0; line-height: 1; }
+.callout { border-left: 4px solid var(--accent); padding: 4px 0 4px 16px; margin: 0 0 16px; color: var(--muted); }
+.vega-bind { font-size: 15px; margin-top: 6px; }
+.vega-bind select { font-family: inherit; font-size: 15px; padding: 2px 6px; }
+footer { max-width: 1120px; margin: 0 auto; padding: 40px 24px 64px; font-size: 15px; color: var(--muted); }
+footer h2 { font-size: 22px; color: var(--ink); }
+footer li { margin-bottom: 6px; }
+a { color: var(--accent); }
+@media (max-width: 900px) {
+  .grid-2, .side { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 38px; }
+}
