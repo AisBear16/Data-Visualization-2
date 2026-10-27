@@ -4,7 +4,7 @@
     "text": "Who spends the most importing games?",
     "subtitle": [
       "Each circle is a country, sized by its 2023 imports of board and table games (US$).",
-      "Circles sit near their country and push apart so they don't overlap"
+      "Circles sit near their country and push apart so they don't overlap. Hover for names of small circles"
     ],
     "anchor": "start",
     "subtitleFont": "Source Sans 3",
@@ -85,6 +85,21 @@
           "expr": "scale('size', datum.import_musd)"
         },
         {
+          "type": "formula",
+          "as": "lines",
+          "expr": "datum.country == 'United States of America' ? ['United', 'States'] : datum.country == 'Netherlands' ? ['Nether-', 'lands'] : split(datum.country, ' ')"
+        },
+        {
+          "type": "formula",
+          "as": "maxlen",
+          "expr": "max(length(datum.lines[0]), datum.lines.length > 1 ? length(datum.lines[1]) : 0, datum.lines.length > 2 ? length(datum.lines[2]) : 0)"
+        },
+        {
+          "type": "formula",
+          "as": "fs",
+          "expr": "min(datum.r / 2.1, 1.7 * datum.r / (0.5 * datum.maxlen), 1.5 * datum.r / (1.15 * datum.lines.length))"
+        },
+        {
           "type": "force",
           "static": true,
           "iterations": 300,
@@ -138,12 +153,12 @@
         "Africa"
       ],
       "range": [
-        "#4c78a8",
-        "#f58518",
-        "#e45756",
-        "#72b7b2",
-        "#54a24b",
-        "#eeca3b"
+        "#1f78b4",
+        "#ff7f00",
+        "#6a3d9a",
+        "#a6cee3",
+        "#fdbf6f",
+        "#cab2d6"
       ]
     }
   ],
@@ -244,7 +259,7 @@
             "field": "y"
           },
           "text": {
-            "signal": "datum.r > 16 ? datum.iso_a3 : ''"
+            "signal": "datum.fs >= 8 ? datum.lines : ''"
           },
           "align": {
             "value": "center"
@@ -259,7 +274,13 @@
             "value": "Fredoka"
           },
           "fontSize": {
-            "signal": "max(10, datum.r / 2.6)"
+            "signal": "datum.fs"
+          },
+          "lineHeight": {
+            "signal": "datum.fs * 1.1"
+          },
+          "dy": {
+            "signal": "-(datum.lines.length - 1) * datum.fs * 0.55"
           }
         }
       }

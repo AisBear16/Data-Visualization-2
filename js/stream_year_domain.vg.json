@@ -2,96 +2,16 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "The board game boom after 2010",
-    "subtitle": "Ranked games released each year by category, 1980 to 2020. Click a category in the legend to highlight it"
+    "subtitle": [
+      "Ranked games released each year, stacked by category, 1980 to 2020. A game in two categories counts twice.",
+      "Click a category in the legend to highlight it"
+    ]
   },
   "data": {
     "url": "data/games_per_year_domain.csv"
   },
   "width": "container",
-  "height": 300,
-  "params": [
-    {
-      "name": "dom",
-      "select": {
-        "type": "point",
-        "fields": [
-          "domain"
-        ]
-      },
-      "bind": "legend"
-    }
-  ],
-  "mark": {
-    "type": "area",
-    "interpolate": "monotone"
-  },
-  "encoding": {
-    "x": {
-      "field": "year",
-      "type": "quantitative",
-      "title": null,
-      "axis": {
-        "format": "d",
-        "tickCount": 9,
-        "grid": false
-      }
-    },
-    "y": {
-      "aggregate": "sum",
-      "field": "games",
-      "type": "quantitative",
-      "stack": "center",
-      "axis": null
-    },
-    "color": {
-      "field": "domain",
-      "type": "nominal",
-      "title": "Category",
-      "scale": {
-        "domain": [
-          "Abstract Games",
-          "Children's Games",
-          "Customizable Games",
-          "Family Games",
-          "Party Games",
-          "Strategy Games",
-          "Thematic Games",
-          "Wargames"
-        ],
-        "range": [
-          "#4C78A8",
-          "#F58518",
-          "#E45756",
-          "#72B7B2",
-          "#54A24B",
-          "#C9A227",
-          "#B279A2",
-          "#9D755D"
-        ]
-      }
-    },
-    "opacity": {
-      "condition": {
-        "param": "dom",
-        "value": 1
-      },
-      "value": 0.15
-    },
-    "tooltip": [
-      {
-        "field": "domain",
-        "title": "Category"
-      },
-      {
-        "field": "year",
-        "title": "Year"
-      },
-      {
-        "field": "games",
-        "title": "Games released"
-      }
-    ]
-  },
+  "height": 320,
   "config": {
     "font": "Source Sans 3",
     "title": {
@@ -121,5 +41,158 @@
     "view": {
       "stroke": null
     }
-  }
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "dom",
+          "select": {
+            "type": "point",
+            "fields": [
+              "domain"
+            ]
+          },
+          "bind": "legend"
+        }
+      ],
+      "mark": {
+        "type": "area",
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": null,
+          "axis": {
+            "format": "d",
+            "tickCount": 9,
+            "grid": false
+          }
+        },
+        "y": {
+          "aggregate": "sum",
+          "field": "games",
+          "type": "quantitative",
+          "stack": "zero",
+          "axis": {
+            "title": "Games released (category listings)",
+            "tickCount": 6
+          }
+        },
+        "color": {
+          "field": "domain",
+          "type": "nominal",
+          "title": "Category",
+          "scale": {
+            "domain": [
+              "Abstract Games",
+              "Children's Games",
+              "Customizable Games",
+              "Family Games",
+              "Party Games",
+              "Strategy Games",
+              "Thematic Games",
+              "Wargames"
+            ],
+            "range": [
+              "#4C78A8",
+              "#F58518",
+              "#E45756",
+              "#72B7B2",
+              "#54A24B",
+              "#C9A227",
+              "#B279A2",
+              "#9D755D"
+            ]
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "dom",
+            "value": 1
+          },
+          "value": 0.15
+        },
+        "tooltip": [
+          {
+            "field": "domain",
+            "title": "Category"
+          },
+          {
+            "field": "year",
+            "title": "Year"
+          },
+          {
+            "field": "games",
+            "title": "Games released"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "games",
+              "as": "total"
+            }
+          ],
+          "groupby": [
+            "year"
+          ]
+        },
+        {
+          "filter": "datum.year == 2015"
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "color": "#2b2b2b",
+            "size": 40
+          },
+          "encoding": {
+            "x": {
+              "field": "year",
+              "type": "quantitative"
+            },
+            "y": {
+              "field": "total",
+              "type": "quantitative"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "dx": -8,
+            "dy": -10,
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "color": "#2b2b2b"
+          },
+          "encoding": {
+            "x": {
+              "field": "year",
+              "type": "quantitative"
+            },
+            "y": {
+              "field": "total",
+              "type": "quantitative"
+            },
+            "text": {
+              "value": "Peak: 529 in 2015"
+            }
+          }
+        }
+      ]
+    }
+  ]
 }

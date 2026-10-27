@@ -9,8 +9,7 @@
     "subtitleColor": "#5f5a52",
     "offset": 12
   },
-  "width": 960,
-  "height": 360,
+  "height": 420,
   "padding": 5,
   "data": [
     {
@@ -47,7 +46,8 @@
               "signal": "height"
             }
           ],
-          "paddingInner": 3
+          "paddingInner": 3,
+          "ratio": 1.3
         }
       ]
     },
@@ -142,9 +142,6 @@
           "font": {
             "value": "Fredoka"
           },
-          "fontSize": {
-            "value": 14
-          },
           "fill": {
             "value": "#fff"
           },
@@ -153,9 +150,6 @@
           },
           "baseline": {
             "value": "top"
-          },
-          "text": {
-            "signal": "[replace(datum.id,' Games',''), format(datum.games, ',') + ' games']"
           }
         },
         "update": {
@@ -164,6 +158,12 @@
           },
           "y": {
             "signal": "datum.y0 + 8"
+          },
+          "fontSize": {
+            "signal": "max(10, min(14, (datum.x1 - datum.x0 - 14) / (0.6 * max(length(replace(datum.id, ' Games', '')), 10))))"
+          },
+          "text": {
+            "signal": "[replace(datum.id,' Games',''), format(datum.games, ',') + ' games']"
           }
         }
       }
@@ -179,5 +179,21 @@
     "text": {
       "font": "Source Sans 3"
     }
-  }
+  },
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
+  "signals": [
+    {
+      "name": "width",
+      "init": "max(containerSize()[0], 360)",
+      "on": [
+        {
+          "events": "window:resize",
+          "update": "max(containerSize()[0], 360)"
+        }
+      ]
+    }
+  ]
 }

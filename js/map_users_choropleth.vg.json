@@ -16,8 +16,8 @@
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#f7f4ee",
-        "stroke": "#d8d0c0"
+        "fill": "#d4e6f1",
+        "stroke": "#9fbfd4"
       }
     },
     {
@@ -31,8 +31,8 @@
       },
       "mark": {
         "type": "geoshape",
-        "stroke": "#e3dccd",
-        "strokeWidth": 0.5,
+        "stroke": "#b3cde0",
+        "strokeWidth": 0.6,
         "fill": null
       }
     },
@@ -60,39 +60,45 @@
               "bgg_users"
             ]
           }
+        },
+        {
+          "calculate": "datum.per100k == null ? 'No members listed' : datum.per100k < 1 ? 'Under 1' : datum.per100k < 5 ? '1 to 5' : datum.per100k < 10 ? '5 to 10' : datum.per100k < 25 ? '10 to 25' : datum.per100k < 50 ? '25 to 50' : '50 or more'",
+          "as": "band"
         }
       ],
       "mark": {
         "type": "geoshape",
-        "stroke": "#fff",
+        "stroke": "#ffffff",
         "strokeWidth": 0.5
       },
       "encoding": {
         "color": {
-          "condition": {
-            "test": "datum.per100k == null",
-            "value": "#d9d9d9"
-          },
-          "field": "per100k",
-          "type": "quantitative",
-          "title": "Members per 100k",
+          "field": "band",
+          "type": "ordinal",
+          "title": "Per 100,000 people",
           "scale": {
-            "type": "threshold",
             "domain": [
-              1,
-              5,
-              10,
-              25,
-              50
+              "No members listed",
+              "Under 1",
+              "1 to 5",
+              "5 to 10",
+              "10 to 25",
+              "25 to 50",
+              "50 or more"
             ],
             "range": [
-              "#fdecd2",
-              "#fcc98a",
+              "#a3a3a3",
+              "#fee6c7",
+              "#fdc086",
               "#f9a04b",
               "#e36d22",
               "#b8410d",
               "#7a2804"
             ]
+          },
+          "legend": {
+            "symbolType": "square",
+            "symbolSize": 200
           }
         },
         "tooltip": [
@@ -111,6 +117,295 @@
             "format": ","
           }
         ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "type": "LineString",
+            "coordinates": [
+              [
+                -180,
+                0
+              ],
+              [
+                -170,
+                0
+              ],
+              [
+                -160,
+                0
+              ],
+              [
+                -150,
+                0
+              ],
+              [
+                -140,
+                0
+              ],
+              [
+                -130,
+                0
+              ],
+              [
+                -120,
+                0
+              ],
+              [
+                -110,
+                0
+              ],
+              [
+                -100,
+                0
+              ],
+              [
+                -90,
+                0
+              ],
+              [
+                -80,
+                0
+              ],
+              [
+                -70,
+                0
+              ],
+              [
+                -60,
+                0
+              ],
+              [
+                -50,
+                0
+              ],
+              [
+                -40,
+                0
+              ],
+              [
+                -30,
+                0
+              ],
+              [
+                -20,
+                0
+              ],
+              [
+                -10,
+                0
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                10,
+                0
+              ],
+              [
+                20,
+                0
+              ],
+              [
+                30,
+                0
+              ],
+              [
+                40,
+                0
+              ],
+              [
+                50,
+                0
+              ],
+              [
+                60,
+                0
+              ],
+              [
+                70,
+                0
+              ],
+              [
+                80,
+                0
+              ],
+              [
+                90,
+                0
+              ],
+              [
+                100,
+                0
+              ],
+              [
+                110,
+                0
+              ],
+              [
+                120,
+                0
+              ],
+              [
+                130,
+                0
+              ],
+              [
+                140,
+                0
+              ],
+              [
+                150,
+                0
+              ],
+              [
+                160,
+                0
+              ],
+              [
+                170,
+                0
+              ],
+              [
+                180,
+                0
+              ]
+            ]
+          },
+          {
+            "type": "LineString",
+            "coordinates": [
+              [
+                0,
+                -90
+              ],
+              [
+                0,
+                -80
+              ],
+              [
+                0,
+                -70
+              ],
+              [
+                0,
+                -60
+              ],
+              [
+                0,
+                -50
+              ],
+              [
+                0,
+                -40
+              ],
+              [
+                0,
+                -30
+              ],
+              [
+                0,
+                -20
+              ],
+              [
+                0,
+                -10
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                10
+              ],
+              [
+                0,
+                20
+              ],
+              [
+                0,
+                30
+              ],
+              [
+                0,
+                40
+              ],
+              [
+                0,
+                50
+              ],
+              [
+                0,
+                60
+              ],
+              [
+                0,
+                70
+              ],
+              [
+                0,
+                80
+              ],
+              [
+                0,
+                90
+              ]
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "geoshape",
+        "filled": false,
+        "stroke": "#4a7fa8",
+        "strokeWidth": 1,
+        "strokeDash": [
+          5,
+          3
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lon": -175,
+            "lat": 0,
+            "t": "Equator",
+            "a": "left"
+          },
+          {
+            "lon": 2,
+            "lat": -50,
+            "t": "Prime meridian",
+            "a": "left"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dy": -7,
+        "fontSize": 12,
+        "fontStyle": "italic",
+        "color": "#2f5f85"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        }
       }
     }
   ],
