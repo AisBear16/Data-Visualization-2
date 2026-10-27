@@ -111,7 +111,7 @@ The Natural Earth 1:110m world country shapes from the Week 8 studio. The three 
 | `waffle_continent.csv` | 100 squares | cell, col, row, continent, share, users | Waffle chart |
 | `game_imports_2023.csv` | 140 countries | country, iso_a3, import_musd, continent, lon, lat | Cartogram |
 | `treemap_domains.csv` | 9 (root + 8 categories) | id, parent, games, avg_rating, avg_complexity | Treemap |
-| `games_per_year_domain.csv` | 315 | year, domain, games | Stacked area chart, bump chart |
+| `games_per_year_domain.csv` | 315 | year, domain, games | Dumbbell plot, bump chart |
 | `games.csv` | 19,451 games | id, title, year, rank_2025, avg_rating_2025, voters_2025, complexity_2021, domain, min_players, max_players, play_time, min_age, owned_2021 | Histogram, heat map, parallel coordinates, ISOTYPE |
 | `games_by_domain.csv` | 11,247 | id, title, year, avg_rating_2025, complexity_2021, voters_2025, domain | Box plot, small multiples |
 
@@ -128,7 +128,7 @@ In `games.csv`, `domain` is each game's main category. In `games_by_domain.csv`,
 | 3 | 1 | Nine in ten members live in North America or Europe | Waffle chart | `#waffle_continent`, line 70 | `js/waffle_continent.vg.json` | `waffle_continent.csv` | Vega-Lite | 10×10 `square` marks; each square = 1% of members |
 | 4 | 1 | Who spends the most importing games? | Dorling cartogram | `#cartogram_imports`, line 80 | `js/cartogram_imports.vg.json` | `game_imports_2023.csv` + topojson | **Vega** | `scale('projection', [lon, lat])` places each country; `force` transform (collide + x + y) pushes circles apart; `sqrt` size scale |
 | 5 | 2 | Wargames and strategy games make up the biggest families | Treemap | `#treemap_domains`, line 97 | `js/treemap_domains.vg.json` | `treemap_domains.csv` | **Vega** | `stratify` builds the hierarchy from `id`/`parent`; `treemap` with `squarify` lays out the rectangles |
-| 6 | 2 | The board game boom after 2010 | Stacked area chart | `#stream_year_domain`, line 102 | `js/stream_year_domain.vg.json` | `games_per_year_domain.csv` | Vega-Lite | `area` with `stack: "zero"` and a y-axis; an `aggregate` + `filter` layer marks the 2015 peak; legend click highlights a category |
+| 6 | 2 | The board game boom after 2010 | Dumbbell plot | `#stream_year_domain`, line 102 | `js/stream_year_domain.vg.json` | `games_per_year_domain.csv` | Vega-Lite | `filter` keeps 2000 and 2015; one layer per category and one `aggregate` layer for "All categories"; `line` joins each pair of `circle` marks; `joinaggregate` finds the larger value so its label goes on the right |
 | 7 | 2 | Which category is released most often? | Bump chart | `#bump_domain_rank`, line 108 | `js/bump_domain_rank.vg.json` | `games_per_year_domain.csv` | Vega-Lite | `calculate` groups years in pairs; `aggregate` sums games; `window` with `rank` ranks categories per period; `line` + `circle` layers |
 | 8 | 3 | Most games are easy to learn | Histogram | `#hist_complexity`, line 125 | `js/hist_complexity.vg.json` | `games.csv` | Vega-Lite | `bin` (step 0.25) on complexity; `count` |
 | 9 | 3 | Heavier games tend to score higher | Heat map | `#heatmap_complexity_rating`, line 130 | `js/heatmap_complexity_rating.vg.json` | `games.csv` | Vega-Lite | `bin` on both axes, `count` as colour; dropdown filter (`params` with `bind: {input: "select"}`) |

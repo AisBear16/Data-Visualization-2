@@ -9,7 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
-  <link rel="stylesheet" href="css/styles.css?v=3">
+  <link rel="stylesheet" href="css/styles.css?v=5">
 </head>
 <body>
 
@@ -98,9 +98,9 @@
     </figure>
 
     <figure class="fig">
-      <p class="fig-tag">Fig 2.2 · Stacked area chart</p>
+      <p class="fig-tag">Fig 2.2 · Dumbbell plot</p>
       <div id="stream_year_domain" class="chart"></div>
-      <figcaption><strong class="key">529</strong><p class="note">Category listings more than doubled from 2000 to 2010 and peaked at 529 in 2015, marked by the dot. The drop after 2015 is mostly because many newer games had no category yet when this data was collected in 2021.</p></figcaption>
+      <figcaption><strong class="key">529</strong><p class="note">Category listings almost tripled, from 184 in 2000 to 529 in 2015, the peak year. Strategy games grew the most, from 30 to 168. Children's games went the other way, from 32 to 9. (Newer games after 2015 often had no category yet when this data was collected in 2021.)</p></figcaption>
     </figure>
 
     <figure class="fig">
@@ -194,7 +194,7 @@
 <script>
   // Draw every chart: each id matches a div above and a file in js/
   // Raise "version" after editing a chart so browsers load the new file instead of an old saved copy
-  const version = 3;
+  const version = 5;
   const charts = [
     "map_users_symbol", "map_users_choropleth", "waffle_continent", "cartogram_imports",
     "treemap_domains", "stream_year_domain", "bump_domain_rank",

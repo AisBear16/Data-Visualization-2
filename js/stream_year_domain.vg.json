@@ -3,15 +3,323 @@
   "title": {
     "text": "The board game boom after 2010",
     "subtitle": [
-      "Ranked games released each year, stacked by category, 1980 to 2020. A game in two categories counts twice.",
-      "Click a category in the legend to highlight it"
+      "Ranked games released in 2000 and in 2015, the peak year. Each line runs from 2000 to 2015.",
+      "A game listed in two categories counts once in each, and twice in All categories"
     ]
   },
   "data": {
-    "url": "data/games_per_year_domain.csv"
+    "url": "data/games_per_year_domain.csv",
+    "format": {
+      "parse": {
+        "year": "number",
+        "games": "number"
+      }
+    }
   },
   "width": "container",
-  "height": 320,
+  "height": 360,
+  "encoding": {
+    "y": {
+      "field": "domain",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "All categories",
+        "Strategy Games",
+        "Family Games",
+        "Wargames",
+        "Thematic Games",
+        "Party Games",
+        "Abstract Games",
+        "Customizable Games",
+        "Children's Games"
+      ],
+      "axis": {
+        "labelFontSize": 13,
+        "labelPadding": 30,
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "x": {
+      "field": "games",
+      "type": "quantitative",
+      "title": "Ranked games released that year",
+      "scale": {
+        "domain": [
+          0,
+          560
+        ]
+      },
+      "axis": {
+        "grid": true,
+        "tickCount": 8
+      }
+    }
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "filter": "datum.year == 2000 || datum.year == 2015"
+        },
+        {
+          "filter": "datum.domain != 'All categories'"
+        },
+        {
+          "calculate": "'' + datum.year",
+          "as": "year_label"
+        },
+        {
+          "joinaggregate": [
+            {
+              "op": "max",
+              "field": "games",
+              "as": "row_max"
+            }
+          ],
+          "groupby": [
+            "domain"
+          ]
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "line",
+            "color": "#bdbdbd",
+            "strokeWidth": 3
+          },
+          "encoding": {
+            "detail": {
+              "field": "domain"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "circle",
+            "size": 170,
+            "opacity": 1,
+            "stroke": "#fff",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "color": {
+              "field": "year_label",
+              "type": "nominal",
+              "title": "Year",
+              "scale": {
+                "domain": [
+                  "2000",
+                  "2015"
+                ],
+                "range": [
+                  "#a6cee3",
+                  "#1f78b4"
+                ]
+              },
+              "legend": {
+                "orient": "top",
+                "direction": "horizontal",
+                "symbolSize": 160
+              }
+            },
+            "tooltip": [
+              {
+                "field": "domain",
+                "title": "Category"
+              },
+              {
+                "field": "year",
+                "title": "Year"
+              },
+              {
+                "field": "games",
+                "title": "Games released"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.games == datum.row_max"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 11,
+            "fontSize": 13,
+            "fontWeight": "bold",
+            "color": "#2b2b2b"
+          },
+          "encoding": {
+            "text": {
+              "field": "games"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.games < datum.row_max"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "dx": -11,
+            "fontSize": 13,
+            "color": "#5f5a52"
+          },
+          "encoding": {
+            "text": {
+              "field": "games"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.year == 2000 || datum.year == 2015"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "games",
+              "as": "games"
+            }
+          ],
+          "groupby": [
+            "year"
+          ]
+        },
+        {
+          "calculate": "'All categories'",
+          "as": "domain"
+        },
+        {
+          "calculate": "'' + datum.year",
+          "as": "year_label"
+        },
+        {
+          "joinaggregate": [
+            {
+              "op": "max",
+              "field": "games",
+              "as": "row_max"
+            }
+          ],
+          "groupby": [
+            "domain"
+          ]
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "line",
+            "color": "#bdbdbd",
+            "strokeWidth": 3
+          },
+          "encoding": {
+            "detail": {
+              "field": "domain"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "circle",
+            "size": 170,
+            "opacity": 1,
+            "stroke": "#fff",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "color": {
+              "field": "year_label",
+              "type": "nominal",
+              "title": "Year",
+              "scale": {
+                "domain": [
+                  "2000",
+                  "2015"
+                ],
+                "range": [
+                  "#a6cee3",
+                  "#1f78b4"
+                ]
+              },
+              "legend": {
+                "orient": "top",
+                "direction": "horizontal",
+                "symbolSize": 160
+              }
+            },
+            "tooltip": [
+              {
+                "field": "domain",
+                "title": "Category"
+              },
+              {
+                "field": "year",
+                "title": "Year"
+              },
+              {
+                "field": "games",
+                "title": "Games released"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.games == datum.row_max"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 11,
+            "fontSize": 13,
+            "fontWeight": "bold",
+            "color": "#2b2b2b"
+          },
+          "encoding": {
+            "text": {
+              "field": "games"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.games < datum.row_max"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "dx": -11,
+            "fontSize": 13,
+            "color": "#5f5a52"
+          },
+          "encoding": {
+            "text": {
+              "field": "games"
+            }
+          }
+        }
+      ]
+    }
+  ],
   "config": {
     "font": "Source Sans 3",
     "title": {
@@ -41,158 +349,5 @@
     "view": {
       "stroke": null
     }
-  },
-  "layer": [
-    {
-      "params": [
-        {
-          "name": "dom",
-          "select": {
-            "type": "point",
-            "fields": [
-              "domain"
-            ]
-          },
-          "bind": "legend"
-        }
-      ],
-      "mark": {
-        "type": "area",
-        "interpolate": "monotone"
-      },
-      "encoding": {
-        "x": {
-          "field": "year",
-          "type": "quantitative",
-          "title": null,
-          "axis": {
-            "format": "d",
-            "tickCount": 9,
-            "grid": false
-          }
-        },
-        "y": {
-          "aggregate": "sum",
-          "field": "games",
-          "type": "quantitative",
-          "stack": "zero",
-          "axis": {
-            "title": "Games released (category listings)",
-            "tickCount": 6
-          }
-        },
-        "color": {
-          "field": "domain",
-          "type": "nominal",
-          "title": "Category",
-          "scale": {
-            "domain": [
-              "Abstract Games",
-              "Children's Games",
-              "Customizable Games",
-              "Family Games",
-              "Party Games",
-              "Strategy Games",
-              "Thematic Games",
-              "Wargames"
-            ],
-            "range": [
-              "#4C78A8",
-              "#F58518",
-              "#E45756",
-              "#72B7B2",
-              "#54A24B",
-              "#C9A227",
-              "#B279A2",
-              "#9D755D"
-            ]
-          }
-        },
-        "opacity": {
-          "condition": {
-            "param": "dom",
-            "value": 1
-          },
-          "value": 0.15
-        },
-        "tooltip": [
-          {
-            "field": "domain",
-            "title": "Category"
-          },
-          {
-            "field": "year",
-            "title": "Year"
-          },
-          {
-            "field": "games",
-            "title": "Games released"
-          }
-        ]
-      }
-    },
-    {
-      "transform": [
-        {
-          "aggregate": [
-            {
-              "op": "sum",
-              "field": "games",
-              "as": "total"
-            }
-          ],
-          "groupby": [
-            "year"
-          ]
-        },
-        {
-          "filter": "datum.year == 2015"
-        }
-      ],
-      "layer": [
-        {
-          "mark": {
-            "type": "point",
-            "filled": true,
-            "color": "#2b2b2b",
-            "size": 40
-          },
-          "encoding": {
-            "x": {
-              "field": "year",
-              "type": "quantitative"
-            },
-            "y": {
-              "field": "total",
-              "type": "quantitative"
-            }
-          }
-        },
-        {
-          "mark": {
-            "type": "text",
-            "align": "right",
-            "dx": -8,
-            "dy": -10,
-            "fontSize": 14,
-            "fontWeight": "bold",
-            "color": "#2b2b2b"
-          },
-          "encoding": {
-            "x": {
-              "field": "year",
-              "type": "quantitative"
-            },
-            "y": {
-              "field": "total",
-              "type": "quantitative"
-            },
-            "text": {
-              "value": "Peak: 529 in 2015"
-            }
-          }
-        }
-      ]
-    }
-  ]
+  }
 }
