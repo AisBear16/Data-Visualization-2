@@ -9,7 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
-  <link rel="stylesheet" href="css/styles.css?v=5">
+  <link rel="stylesheet" href="css/styles.css?v=6">
 </head>
 <body>
 
@@ -55,13 +55,13 @@
     <figure class="fig">
       <p class="fig-tag">Fig 1.1 · Proportional symbol map</p>
       <div id="map_users_symbol" class="chart"></div>
-      <figcaption><strong class="key">155,000</strong><p class="note">The United States alone has about 155,000 members. Malaysia has 765, most of them in Selangor and Kuala Lumpur.</p></figcaption>
+      <figcaption><strong class="key-num">155,000</strong><p class="note">The United States alone has about 155,000 members. Malaysia has 765, most of them in Selangor and Kuala Lumpur.</p></figcaption>
     </figure>
 
     <figure class="fig">
       <p class="fig-tag">Fig 1.2 · Choropleth map</p>
       <div id="map_users_choropleth" class="chart"></div>
-      <figcaption><strong class="key">2.4</strong><p class="note">Big countries have more members simply because they have more people, so this map shows members per 100,000 people. Canada (77) and the Nordic countries lead. Malaysia has about 2.4 per 100,000, so the hobby is still small here, with plenty of room to grow.</p></figcaption>
+      <figcaption><strong class="key-num">2.4</strong><p class="note">Big countries have more members simply because they have more people, so this map shows members per 100,000 people. Canada (77) and the Nordic countries lead. Malaysia has about 2.4 per 100,000, so the hobby is still small here, with plenty of room to grow.</p></figcaption>
     </figure>
 
     <figure class="fig side">
@@ -78,7 +78,7 @@
     <figure class="fig">
       <p class="fig-tag">Fig 1.4 · Dorling cartogram</p>
       <div class="scroll"><div id="cartogram_imports"></div></div>
-      <figcaption><strong class="key">US$12 bn</strong><p class="note">Trade data tells a similar story. The United States imported over US$12 billion of board and table games in 2023, about four times more than Germany. Malaysia imported US$41 million. (Trade code HS 950490 also includes casino and arcade table games, not only board games.)</p></figcaption>
+      <figcaption><strong class="key-num">US$12 bn</strong><p class="note">Trade data tells a similar story. The United States imported over US$12 billion of board and table games in 2023, about four times more than Germany. Malaysia imported US$41 million. (Trade code HS 950490 also includes casino and arcade table games, not only board games.)</p></figcaption>
     </figure>
   </section>
 
@@ -100,7 +100,7 @@
     <figure class="fig">
       <p class="fig-tag">Fig 2.2 · Dumbbell plot</p>
       <div id="stream_year_domain" class="chart"></div>
-      <figcaption><strong class="key">529</strong><p class="note">Category listings almost tripled, from 184 in 2000 to 529 in 2015, the peak year. Strategy games grew the most, from 30 to 168. Children's games went the other way, from 32 to 9. (Newer games after 2015 often had no category yet when this data was collected in 2021.)</p></figcaption>
+      <figcaption><strong class="key-num">529</strong><p class="note">Category listings almost tripled, from 184 in 2000 to 529 in 2015, the peak year. Strategy games grew the most, from 30 to 168. Children's games went the other way, from 32 to 9. (Newer games after 2015 often had no category yet when this data was collected in 2021.)</p></figcaption>
     </figure>
 
     <figure class="fig">
@@ -123,7 +123,7 @@
       <figure class="fig">
         <p class="fig-tag">Fig 3.1 · Histogram</p>
         <div id="hist_complexity" class="chart"></div>
-        <figcaption><strong class="key">71%</strong><p class="note">71% of games score under 2.5, so most games are light to medium.</p></figcaption>
+        <figcaption><strong class="key-num">71%</strong><p class="note">71% of games score under 2.5, so most games are light to medium.</p></figcaption>
       </figure>
       <figure class="fig">
         <p class="fig-tag">Fig 3.2 · Heat map</p>
@@ -160,13 +160,13 @@
     <figure class="fig">
       <p class="fig-tag">Fig 4.1 · Parallel coordinates</p>
       <div id="parallel_top_games" class="chart"></div>
-      <figcaption><strong class="key">3.6</strong><p class="note">The typical top-25 game takes 2 hours, suits ages 13 and up and has a complexity of about 3.6.</p></figcaption>
+      <figcaption><strong class="key-num">3.6</strong><p class="note">The typical top-25 game takes 2 hours, suits ages 13 and up and has a complexity of about 3.6.</p></figcaption>
     </figure>
 
     <figure class="fig">
       <p class="fig-tag">Fig 4.2 · ISOTYPE pictogram</p>
       <div id="isotype_owners" class="chart"></div>
-      <figcaption><strong class="key">150,000</strong><p class="note">Pandemic, CATAN and Carcassonne are each owned by about 150,000 members, and all three have a complexity of 2.4 or less, far lighter than the top-ranked games.</p></figcaption>
+      <figcaption><strong class="key-num">150,000</strong><p class="note">Pandemic, CATAN and Carcassonne are each owned by about 150,000 members, and all three have a complexity of 2.4 or less, far lighter than the top-ranked games.</p></figcaption>
     </figure>
   </section>
 
@@ -194,7 +194,7 @@
 <script>
   // Draw every chart: each id matches a div above and a file in js/
   // Raise "version" after editing a chart so browsers load the new file instead of an old saved copy
-  const version = 5;
+  const version = 6;
   const charts = [
     "map_users_symbol", "map_users_choropleth", "waffle_continent", "cartogram_imports",
     "treemap_domains", "stream_year_domain", "bump_domain_rank",

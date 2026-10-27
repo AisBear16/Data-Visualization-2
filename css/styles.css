@@ -116,7 +116,7 @@ figcaption {
   align-items: start; margin-top: 14px; padding-top: 14px;
   border-top: 1px solid var(--line);
 }
-.key { font-family: "Fredoka", sans-serif; font-size: 34px; line-height: 1.1; color: var(--accent); }
+.key-num { font-family: "Fredoka", sans-serif; font-size: 34px; line-height: 1.1; color: var(--accent); }
 .note { font-size: 19px; line-height: 1.55; color: var(--ink); margin: 0; }
 
 /* waffle chart with its big number beside it */
@@ -166,4 +166,28 @@ footer a { color: var(--gold); }
   .topbar { padding: 8px 12px; }
   .topbar ul { gap: 2px; }
   .topbar li a { font-size: 14px; padding: 4px 6px; gap: 4px; }
+}
+
+/* Hover boxes (Vega tooltips): small, readable, never cut off */
+#vg-tooltip-element {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.35;
+  max-width: 320px;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+#vg-tooltip-element table tr td.key {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #5f5a52;
+  max-width: none;
+  white-space: nowrap;
+  padding-right: 8px;
+}
+#vg-tooltip-element table tr td.value {
+  font-size: 14px;
+  color: #2b2b2b;
+  max-width: 220px;
 }

@@ -89,9 +89,10 @@ charts.forEach(function (id) {
 - `.topbar`, `.pip`, `.progress`: the sticky top bar, its numbered dice links and the progress bar.
 - `.hero`, `.tokens`, `.track`: the green header, the three key-number tokens and the striped "board track" under it.
 - `.part-head`, `.die`: each part's heading row, with a dice face (1 to 4 pips) and the intro text beside it.
-- `.fig`, `.fig-tag`, `figcaption`, `.key`, `.note`: the white chart cards, their "Fig" labels, and the caption row with a big key number and the caption text (limited to about 60 characters per line).
+- `.fig`, `.fig-tag`, `figcaption`, `.key-num`, `.note`: the white chart cards, their "Fig" labels, and the caption row with a big key number and the caption text (limited to about 60 characters per line).
 - `.grid-2`: two charts side by side (histogram and heat map). `.side`: waffle chart with the big "89%" next to it.
 - `.rule-card`: the "Key takeaway" box styled like a game rule card.
+- `#vg-tooltip-element`: the hover boxes, kept at 14px so their labels fit.
 - `.scroll`: lets the wide cartogram and small multiples scroll sideways on small screens.
 - `@media (max-width: 900px)` and `(max-width: 520px)`: stack everything into one column and shrink the top bar on small screens.
 
